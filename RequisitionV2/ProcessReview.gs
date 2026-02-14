@@ -44,6 +44,58 @@ function processReview({ rowId, stage, name, email, status, comment }) {
   const hrEmail = sheet.getRange(rowId, hrEmailCol).getValue();
   const directorEmail = sheet.getRange(rowId, directorEmailCol).getValue();
 
+  // Default function which runs if we have an unknown stage passed to our function
+  function notificationMailer() {
+    MailApp.sendEmail({
+      to: "",
+      subject: "An exception occurred",
+      htmlBody: DEFAULT_HTML,
+    });
+  }
+
+  // Determine which function we should run based on the stage
+  switch (stage) {
+    case "HOD":
+      hodApprovalStage({
+        rowId,
+        userEmail,
+        status,
+        email,
+        name,
+        travelCategory,
+        modeOfTravel,
+        approvalTier,
+      });
+      break;
+    case "HR":
+      hrApprovalStage({
+        rowId,
+        userEmail,
+        status,
+        email,
+        name,
+        hodEmail,
+        travelCategory,
+        modeOfTravel,
+        approvalTier,
+      });
+      break;
+    case "Director":
+      directorApprovalStage({
+        rowId,
+        userEmail,
+        status,
+        email,
+        name,
+        hrEmail,
+        hodEmail,
+      });
+      break;
+    default:
+      notificationMailer();
+      break;
+  }
+
   //If all goes well return a success message
   return "success";
 }
