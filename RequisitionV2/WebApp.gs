@@ -67,3 +67,61 @@ function doGet(e) {
     .addMetaTag("viewport", "width=device-width, initial-scale=1")
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
+
+// A default emailHtml for alert notifications
+const DEFAULT_HTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f3f4f6; margin: 0; padding: 0; }
+    .container { max-width: 600px; margin: 40px auto; background: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    .header { background-color: #fffbeb; border-bottom: 3px solid #f59e0b; padding: 20px; text-align: center; }
+    .header h2 { margin: 0; color: #92400e; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; }
+    .content { padding: 30px; color: #374151; line-height: 1.6; }
+    .alert-box { background-color: #fef2f2; border: 1px solid #fee2e2; border-left: 4px solid #ef4444; padding: 16px; margin: 20px 0; border-radius: 4px; color: #b91c1c; }
+    .data-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    .data-table td { padding: 12px; border-bottom: 1px solid #f3f4f6; }
+    .label { font-weight: 600; color: #6b7280; width: 140px; }
+    .value { font-family: 'Courier New', monospace; color: #111827; }
+    .footer { background-color: #f9fafb; padding: 15px; text-align: center; font-size: 12px; color: #9ca3af; border-top: 1px solid #e5e7eb; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>Exception Alert</h2>
+    </div>
+    <div class="content">
+      <p><strong>System Notification:</strong> An invalid parameter was detected in the <code>processReview</code> workflow.</p>
+      
+      <div class="alert-box">
+        <strong>Error:</strong> Unknown 'stage' parameter received.
+      </div>
+
+      <table class="data-table">
+        <tr>
+          <td class="label">Invalid Value:</td>
+          <td class="value" style="color: #dc2626;">Some Values</td>
+        </tr>
+        <tr>
+          <td class="label">Reference No:</td>
+          <td class="value">Some Reference Number</td>
+        </tr>
+        <tr>
+          <td class="label">Timestamp:</td>
+          <td class="value">${new Date().toLocaleString()}</td>
+        </tr>
+      </table>
+
+      <p style="margin-top: 20px; font-size: 14px; color: #6b7280;">
+        The process was halted to prevent data corruption. Please investigate the payload source.
+      </p>
+    </div>
+    <div class="footer">
+      Automated Backend Monitoring System
+    </div>
+  </div>
+</body>
+</html>
+`;
