@@ -17,8 +17,8 @@ function doGet(e) {
     .getValue()
     .toLowerCase();
 
-  // 2. FALLBACK CHECK: If status is not "pending" or "n/a", return the "Already Processed" UI
-  if (currentStatus !== "pending" || currentStatus !== "n/a") {
+  // 2. FALLBACK CHECK: If status is not "pending" and "n/a", return the "Already Processed" UI
+  if (currentStatus !== "pending" && currentStatus !== "n/a") {
     const fallback = HtmlService.createTemplateFromFile("AlreadyProcessed");
     fallback.status = currentStatus;
     fallback.stage = stage;

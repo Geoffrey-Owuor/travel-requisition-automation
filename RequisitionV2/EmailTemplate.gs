@@ -85,17 +85,17 @@ function EmailTemplate({ rowId, message, title, role, reviewLink }) {
             </tr>
           </thead>
           <tbody>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HOD Status:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee;">${hodApprovalStatus || "n/a"}</td></tr>
-             <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HOD Approver:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hodApprover || "n/a"}</td></tr>
-             <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HOD Email:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hodEmail || "n/a"}</td></tr>
-             <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HOD Comments:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hodComments || "none"}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HR Status:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee;">${hrApprovalStatus || "n/a"}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HR Approver:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hrApprover || "n/a"}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HR Email:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hrEmail || "n/a"}</td></tr>
+            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HOD Status:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee;">${hodApprovalStatus || "N/A"}</td></tr>
+             <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HOD Approver:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hodApprover || "N/A"}</td></tr>
+             <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HOD Email:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hodEmail || "N/A"}</td></tr>
+             <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HOD Comments:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hodComments || "None"}</td></tr>
+            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HR Status:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee;">${hrApprovalStatus || "N/A"}</td></tr>
+            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HR Approver:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hrApprover || "N/A"}</td></tr>
+            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HR Email:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hrEmail || "N/A"}</td></tr>
             <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HR Comments:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hrComments || "None"}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">Director Status:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee;">${directorApprovalStatus || "n/a"}</td></tr>
-            <tr><td style="padding: 10px 15px; font-weight: bold; color: #555;">Director Approver:</td><td style="padding: 10px 15px; font-style: italic; color: #666;">${directorApprover || "n/a"}</td></tr>
-            <tr><td style="padding: 10px 15px; font-weight: bold; color: #555;">Director Email:</td><td style="padding: 10px 15px; font-style: italic; color: #666;">${directorEmail || "n/a"}</td></tr>
+            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">Director Status:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee;">${directorApprovalStatus || "N/A"}</td></tr>
+            <tr><td style="padding: 10px 15px; font-weight: bold; color: #555;">Director Approver:</td><td style="padding: 10px 15px; font-style: italic; color: #666;">${directorApprover || "N/A"}</td></tr>
+            <tr><td style="padding: 10px 15px; font-weight: bold; color: #555;">Director Email:</td><td style="padding: 10px 15px; font-style: italic; color: #666;">${directorEmail || "N/A"}</td></tr>
             <tr><td style="padding: 10px 15px; font-weight: bold; color: #555;">Director Comments:</td><td style="padding: 10px 15px; font-style: italic; color: #666;">${directorComments || "None"}</td></tr>
           </tbody>
         </table>
