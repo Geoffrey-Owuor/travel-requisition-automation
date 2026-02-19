@@ -1,4 +1,4 @@
-// 1. The HR approval stage function
+// 2. The HR approval stage function
 function hrApprovalStage({
   rowId,
   userEmail,
@@ -8,7 +8,7 @@ function hrApprovalStage({
   hodEmail,
   travelCategory,
   modeOfTravel,
-  approvalTier,
+  estimatedCost,
 }) {
   // HR declined the request, notify HR, HOD and the submitter - END
   if (status === "Declined") {
@@ -63,7 +63,8 @@ function hrApprovalStage({
     // The requisition ends at the HR stage
     if (
       travelCategory === "Local" &&
-      (modeOfTravel === "Air" || approvalTier === "Tier 2")
+      (modeOfTravel === "Air" ||
+        (Number(estimatedCost) > 30000 && Number(estimatedCost) < 100000))
     ) {
       // Generate user email html
       const userHtmlBody = EmailTemplate({

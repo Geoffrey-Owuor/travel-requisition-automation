@@ -1,4 +1,4 @@
-// 1. The Director approval stage function
+// 3. The Director approval stage function
 function directorApprovalStage({
   rowId,
   userEmail,

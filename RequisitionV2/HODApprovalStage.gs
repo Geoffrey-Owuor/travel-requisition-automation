@@ -7,7 +7,7 @@ function hodApprovalStage({
   name,
   travelCategory,
   modeOfTravel,
-  approvalTier,
+  estimatedCost,
 }) {
   // HOD declined the request, notify the HOD and the submitter - END
   if (status === "Declined") {
@@ -47,7 +47,7 @@ function hodApprovalStage({
     if (
       travelCategory === "Local" &&
       modeOfTravel === "Road" &&
-      approvalTier === "Tier 1"
+      Number(estimatedCost) < 30000
     ) {
       // Generate user email html
       const userHtmlBody = EmailTemplate({
