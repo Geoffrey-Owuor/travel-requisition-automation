@@ -10,14 +10,10 @@ function processReview({ rowId, stage, name, email, status, comment }) {
   const userEmailCol = headers.indexOf("Email Address") + 1;
   const userEmail = sheet.getRange(rowId, userEmailCol).getValue();
 
-  // Data that will determine our logic (how we send emails)
-  const travelCategoryCol = headers.indexOf("Travel Category") + 1;
-  const modeOfTravelCol = headers.indexOf("Requested Mode of Travel") + 1;
-  const estimatedCostCol = headers.indexOf("Total Estimated Cost") + 1;
+  // Approval Tier Data that will determine our logic (how we send emails)
+  const approvalTierCol = headers.indexOf("Approval Tier") + 1;
 
-  const travelCategory = sheet.getRange(rowId, travelCategoryCol).getValue();
-  const modeOfTravel = sheet.getRange(rowId, modeOfTravelCol).getValue();
-  const estimatedCost = sheet.getRange(rowId, estimatedCostCol).getValue();
+  const approvalTier = sheet.getRange(rowId, approvalTierCol).getValue();
 
   // Approver columns
   const approverEmailCol = headers.indexOf(`${stage} Email`) + 1;
@@ -60,9 +56,7 @@ function processReview({ rowId, stage, name, email, status, comment }) {
         status,
         email,
         name,
-        travelCategory,
-        modeOfTravel,
-        estimatedCost,
+        approvalTier,
       });
       break;
     case "HR":
@@ -73,9 +67,7 @@ function processReview({ rowId, stage, name, email, status, comment }) {
         email,
         name,
         hodEmail,
-        travelCategory,
-        modeOfTravel,
-        estimatedCost,
+        approvalTier,
       });
       break;
     case "Director":
