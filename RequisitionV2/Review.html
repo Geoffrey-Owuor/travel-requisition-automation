@@ -3,238 +3,400 @@
   <head>
     <base target="_top" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
       :root {
-        --primary: #003366; /* Hotpoint Professional Navy */
-        --secondary: #6c757d;
-        --success: #28a745;
-        --danger: #dc3545;
-        --bg: #f4f7f9;
+        --gold: #c4a060;
+        --gold-light: #e8c97a;
+        --gold-bg: #fdf8f0;
+        --gold-border: #e8d9be;
+        --dark: #1c1a17;
+        --warm-bg: #f0ece4;
         --white: #ffffff;
+        --text: #3a3530;
+        --muted: #8a7a6a;
+        --success: #2e7d52;
+        --success-bg: #f0faf5;
+        --danger: #c0392b;
+        --danger-bg: #fff5f5;
       }
 
       body {
-        font-family: "Inter", sans-serif;
-        background-color: var(--bg);
+        font-family: "DM Sans", sans-serif;
+        background-color: var(--warm-bg);
         margin: 0;
-        padding: 20px;
+        padding: 28px 20px 48px;
         display: flex;
         justify-content: center;
       }
 
       .container {
         width: 100%;
-        max-width: 650px;
+        max-width: 660px;
       }
 
+      /* Header */
       .header {
         text-align: center;
+        margin-bottom: 28px;
       }
 
       .header-logo {
-        width: 60%; /* Sets width to exactly 2/3rds of the container */
-        height: auto; /* Maintains the aspect ratio automatically */
-        display: block; /* Required for margin auto to work */
-        margin: 0 auto; /* Centers the image horizontally */
-        max-width: 100%; /* Ensures it doesn't overflow on tiny screens */
+        width: 52%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
       }
 
-      /* Info Card */
+      /* Cards */
       .card {
         background: var(--white);
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 6px 32px rgba(44, 34, 24, 0.09);
+        padding: 32px;
         margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--gold),
+          var(--gold-light),
+          var(--gold)
+        );
       }
 
       .card-title {
-        font-size: 18px;
-        font-weight: 700;
-        color: var(--primary);
-        margin-bottom: 20px;
-        border-bottom: 2px solid #f0f0f0;
-        padding-bottom: 10px;
+        font-family: "DM Serif Display", serif;
+        font-size: 20px;
+        font-weight: 400;
+        color: var(--dark);
+        margin: 0 0 6px;
         display: flex;
+        align-items: center;
         justify-content: space-between;
+        gap: 12px;
+      }
+
+      .card-divider {
+        border: none;
+        border-top: 1px solid #f0ebe2;
+        margin: 16px 0 24px;
       }
 
       .stage-badge {
-        font-size: 12px;
-        background: #e1ecf4;
-        color: var(--primary);
-        padding: 4px 12px;
-        border-radius: 20px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        background: var(--gold-bg);
+        color: #7a5c30;
+        border: 1.5px solid var(--gold-border);
+        padding: 5px 14px;
+        border-radius: 50px;
+        white-space: nowrap;
       }
 
-      /* Grid Layout for Details */
+      /* Details Grid */
       .details-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 20px;
+        gap: 0;
       }
 
       .detail-item {
-        margin-bottom: 10px;
-      }
-      .label {
-        font-size: 12px;
-        color: var(--secondary);
-        text-transform: uppercase;
-        font-weight: 600;
-      }
-      .value {
-        font-size: 15px;
-        color: #333;
-        font-weight: 500;
-        margin-top: 4px;
+        padding: 14px 16px;
+        border-bottom: 1px solid #f5f0e8;
+        border-right: 1px solid #f5f0e8;
       }
 
-      /* Form Styling */
-      label {
-        font-weight: 600;
+      .detail-item:nth-child(even) {
+        border-right: none;
+      }
+
+      /* Remove bottom border from last two items */
+      .detail-item:nth-last-child(-n + 2):not(.detail-item--full) {
+        border-bottom: none;
+      }
+
+      .detail-item--full {
+        grid-column: span 2;
+        border-right: none;
+        border-bottom: none;
+      }
+
+      .label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 5px;
+      }
+
+      .value {
         font-size: 14px;
-        color: var(--primary);
+        color: var(--text);
+        font-weight: 500;
+        line-height: 1.4;
+      }
+
+      /* Budget Badges */
+      .budget-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 14px;
+        border-radius: 50px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .budget-badge::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .budget-yes {
+        background-color: var(--success-bg);
+        color: var(--success);
+        border: 1.5px solid rgba(46, 125, 82, 0.2);
+      }
+      .budget-yes::before {
+        background: var(--success);
+      }
+
+      .budget-no {
+        background-color: var(--danger-bg);
+        color: var(--danger);
+        border: 1.5px solid rgba(192, 57, 43, 0.2);
+      }
+      .budget-no::before {
+        background: var(--danger);
+      }
+
+      /* Form */
+      .form-label {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--muted);
         display: block;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
       }
 
       textarea {
         width: 100%;
-        height: 120px;
-        border: 1px solid #ced4da;
-        border-radius: 8px;
-        padding: 12px;
-        font-family: inherit;
+        height: 110px;
+        border: 1.5px solid #e8ddd0;
+        border-radius: 12px;
+        padding: 14px 16px;
+        font-family: "DM Sans", sans-serif;
         font-size: 14px;
-        box-sizing: border-box;
-        transition: border-color 0.2s;
+        color: var(--text);
+        background: var(--gold-bg);
+        resize: vertical;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+
+      textarea::placeholder {
+        color: #b0a090;
       }
 
       textarea:focus {
         outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+        border-color: var(--gold);
+        box-shadow: 0 0 0 3px rgba(196, 160, 96, 0.15);
+        background: #fff;
       }
 
+      /* Buttons */
       .btn-group {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 15px;
-        margin-top: 25px;
+        gap: 14px;
+        margin-top: 22px;
       }
 
       button {
-        padding: 14px;
+        padding: 15px;
         border: none;
-        border-radius: 8px;
+        border-radius: 12px;
+        font-family: "DM Sans", sans-serif;
         font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
         cursor: pointer;
-        font-size: 14px;
         transition:
           transform 0.1s,
-          opacity 0.2s;
+          opacity 0.2s,
+          box-shadow 0.2s;
       }
 
       button:active {
         transform: scale(0.98);
       }
-
-      .btn-approve {
-        background-color: var(--success);
-        color: white;
-      }
-      .btn-decline {
-        background-color: var(--danger);
-        color: white;
-      }
       button:disabled {
-        opacity: 0.5;
+        opacity: 0.45;
         cursor: not-allowed;
       }
 
+      .btn-approve {
+        background: linear-gradient(135deg, #2e7d52, #3da368);
+        color: #fff;
+        box-shadow: 0 4px 16px rgba(46, 125, 82, 0.25);
+      }
+
+      .btn-approve:hover:not(:disabled) {
+        box-shadow: 0 6px 20px rgba(46, 125, 82, 0.35);
+      }
+
+      .btn-decline {
+        background: linear-gradient(135deg, #c0392b, #e04535);
+        color: #fff;
+        box-shadow: 0 4px 16px rgba(192, 57, 43, 0.22);
+      }
+
+      .btn-decline:hover:not(:disabled) {
+        box-shadow: 0 6px 20px rgba(192, 57, 43, 0.32);
+      }
+
+      /* Footer */
       .footer {
         text-align: center;
         font-size: 11px;
-        color: var(--secondary);
-        margin-top: 40px;
+        color: var(--muted);
+        margin-top: 36px;
+        line-height: 1.8;
       }
 
+      /* Loading Overlay */
       #overlay {
         display: none;
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.9);
+        inset: 0;
+        background: rgba(240, 236, 228, 0.92);
+        backdrop-filter: blur(4px);
         justify-content: center;
         align-items: center;
         flex-direction: column;
         z-index: 100;
+        gap: 16px;
       }
 
-      /* Center the success card perfectly */
+      .spinner {
+        width: 42px;
+        height: 42px;
+        border: 3px solid #e8d9be;
+        border-top-color: var(--gold);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+
+      .overlay-text {
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: #7a5c30;
+        text-transform: uppercase;
+      }
+
+      /* Success State */
       .success-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        min-height: 80vh; /* Adjusts height to center vertically */
+        min-height: 80vh;
         text-align: center;
       }
 
-      /* Professional SVG Styling */
-      .success-icon {
-        width: 80px;
-        height: 80px;
-        margin-bottom: 24px;
-        fill: none;
-        stroke: #2c3e50; /* Dark grayish/black */
+      .success-card {
+        background: var(--white);
+        border-radius: 20px;
+        box-shadow: 0 6px 32px rgba(44, 34, 24, 0.09);
+        padding: 60px 52px;
+        max-width: 460px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .success-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--gold),
+          var(--gold-light),
+          var(--gold)
+        );
+      }
+
+      .success-icon-wrap {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #fdf8f0, #f5ede0);
+        border: 1.5px solid var(--gold-border);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 28px;
+      }
+
+      .success-icon-wrap svg {
+        width: 32px;
+        height: 32px;
+        stroke: var(--gold);
         stroke-width: 2;
         stroke-linecap: round;
         stroke-linejoin: round;
+        fill: none;
       }
 
-      /* Dynamic Budget Badges */
-      .budget-badge {
-        display: inline-block;
-        padding: 4px 16px;
-        border-radius: 50px; /* Full rounded */
-        font-weight: 700;
-        font-size: 13px;
-        text-transform: uppercase;
-      }
-
-      .budget-yes {
-        background-color: #d4edda; /* Light Green */
-        color: #155724;
-      }
-
-      .budget-no {
-        background-color: #f8d7da; /* Light Red */
-        color: #721c24;
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
       }
     </style>
   </head>
   <body>
     <div id="overlay">
-      <div
-        style="
-          border: 4px solid #f3f3f3;
-          border-top: 4px solid var(--primary);
-          border-radius: 50%;
-          width: 40px;
-          height: 40px;
-          animation: spin 1s linear infinite;
-        "
-      ></div>
-      <p style="margin-top: 15px; font-weight: 600; color: var(--primary)">
-        Processing Request...
-      </p>
+      <div class="spinner"></div>
+      <p class="overlay-text">Processing Request…</p>
     </div>
 
     <div class="container">
@@ -246,14 +408,16 @@
         />
       </div>
 
+      <!-- Requisition Preview Card -->
       <div class="card">
         <div class="card-title">
           Requisition Preview
           <span class="stage-badge"
             ><?= stage ?>
-            Approval Stage</span
+            Approval</span
           >
         </div>
+        <hr class="card-divider" />
 
         <div class="details-grid">
           <div class="detail-item">
@@ -298,15 +462,17 @@
           </div>
           <div class="detail-item">
             <div class="label">Estimated Cost</div>
-            <div class="value">Ksh. <?= details.estimatedCost ?></div>
+            <div class="value" style="font-weight: 700; color: var(--success)">
+              KES <?= details.estimatedCost ?>
+            </div>
           </div>
           <div class="detail-item">
             <div class="label">Cost Centre</div>
             <div class="value"><?= details.costCentre ?></div>
           </div>
-          <div class="detail-item" style="grid-column: span 2">
+          <div class="detail-item detail-item--full">
             <div class="label">Within Budget?</div>
-            <div class="value">
+            <div class="value" style="margin-top: 6px">
               <? if (details.withinBudget === 'Yes') { ?>
               <span class="budget-badge budget-yes">Yes</span>
               <? } else { ?>
@@ -319,12 +485,15 @@
         </div>
       </div>
 
+      <!-- Review Decision Card -->
       <div class="card">
         <div class="card-title">Review Decision</div>
-        <label for="comment">Reviewer Comments</label>
+        <hr class="card-divider" />
+
+        <label class="form-label" for="comment">Reviewer Comments</label>
         <textarea
           id="comment"
-          placeholder="You can add a comment if necessary..."
+          placeholder="Add a comment if necessary…"
         ></textarea>
 
         <div class="btn-group">
@@ -333,14 +502,14 @@
             id="approveBtn"
             onclick="submit('Approved')"
           >
-            APPROVE
+            ✓ &nbsp;Approve
           </button>
           <button
             class="btn-decline"
             id="declineBtn"
             onclick="submit('Declined')"
           >
-            DECLINE
+            ✕ &nbsp;Decline
           </button>
         </div>
       </div>
@@ -356,47 +525,38 @@
 
     <script>
       function submit(status) {
-        // 1. Get the comment and trim whitespace
         let comment = document.getElementById("comment").value.trim();
-
-        // 2. Default if empty
-        if (!comment) {
-          comment = "No Comment";
-        }
+        if (!comment) comment = "No Comment";
 
         document.getElementById("overlay").style.display = "flex";
+        document.getElementById("approveBtn").disabled = true;
+        document.getElementById("declineBtn").disabled = true;
 
-        // 4. The Server Call
         google.script.run
-          .withSuccessHandler(function (returnValue) {
-            // returnValue is the "Success" string sent back from GS
-            console.log("Server says: " + returnValue);
-
-            // 1. Target the main container
+          .withSuccessHandler(function () {
             const container = document.querySelector(".container");
-
-            // 2. Clear and apply new layout
             container.classList.add("success-container");
             container.innerHTML = `
-          <div class="card" style="padding: 60px; border-top: 5px solid #2c3e50;">
-            <svg class="success-icon" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10"></circle>
-              <polyline points="16 9 11 14 8 11"></polyline>
-            </svg>
-            <h2 style="color: #2c3e50; margin-top: 0; font-weight: 700;">Decision Recorded</h2>
-            <p style="color: #666; font-size: 16px; margin-bottom: 0;">
-              The travel requisition has been updated successfully.<br>
-              <span style="font-size: 14px; color: #999;">You may now safely close this window.</span>
-            </p>
-          </div>
-        `;
-
+              <div class="success-card">
+                <div class="success-icon-wrap">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <polyline points="16 9 11 14 8 11"></polyline>
+                  </svg>
+                </div>
+                <p style="font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin: 0 0 10px;">Confirmed</p>
+                <h2 style="font-family: 'DM Serif Display', serif; color: var(--dark); margin: 0 0 16px; font-size: 26px; font-weight: 400;">Decision Recorded</h2>
+                <p style="font-size: 15px; color: #6b5e50; line-height: 1.7; margin: 0 0 24px;">The travel requisition has been updated successfully.</p>
+                <p style="font-size: 13px; color: #b0a090; margin: 0; padding-top: 20px; border-top: 1px solid #f0ebe2;">You may now safely close this window.</p>
+              </div>
+            `;
             document.getElementById("overlay").style.display = "none";
           })
           .withFailureHandler(function (err) {
-            // Good practice: show an alert if the server crashes
             alert("Error: " + err.message);
             document.getElementById("overlay").style.display = "none";
+            document.getElementById("approveBtn").disabled = false;
+            document.getElementById("declineBtn").disabled = false;
           })
           .processReview({
             rowId: "<?= rowId ?>",
@@ -408,16 +568,5 @@
           });
       }
     </script>
-
-    <style>
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-    </style>
   </body>
 </html>

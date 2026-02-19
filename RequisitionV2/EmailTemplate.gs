@@ -4,7 +4,6 @@ function EmailTemplate({ rowId, message, title, role, reviewLink }) {
   const lastCol = sheet.getLastColumn();
   const values = sheet.getRange(rowId, 2, 1, lastCol - 1).getValues()[0];
 
-  // Destructuring for clarity
   const [
     emailAddress,
     employeeName,
@@ -17,10 +16,10 @@ function EmailTemplate({ rowId, message, title, role, reviewLink }) {
     businessJustification,
     modeOfTransport,
     perDiemPolicy,
-    approvalTier,
     estimatedCost,
     costCentre,
     withinBudget,
+    approvalTier,
     hodApprover,
     hodEmail,
     hodComments,
@@ -35,82 +34,152 @@ function EmailTemplate({ rowId, message, title, role, reviewLink }) {
     directorApprovalStatus,
   ] = values;
 
-  // Formatted dates
   const formattedDepartureDate = dateFormatter(departureDate);
   const formattedReturnDate = dateFormatter(returnDate);
 
-  // Logic: Only show the button if the role is NOT "user"
   const buttonStyle = role !== "user" ? "display: block;" : "display: none;";
 
   const emailHtml = `
-    <div style="font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 20px auto; border: 1px solid #e0e0e0; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-      
-      <div style="background-color: #1a1a1a; color: #ffffff; padding: 30px 20px; text-align: center;">
-        <h2 style="margin: 0; font-size: 22px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">${title}</h2>
-      </div>
+    <div style="font-family: 'Georgia', 'Times New Roman', serif; background-color: #f0ece4; padding: 40px 20px; min-height: 100%;">
+      <div style="max-width: 620px; margin: 0 auto;">
 
-      <div style="padding: 30px; background-color: #ffffff;">
-        <p style="font-size: 16px; color: #2c3e50; margin-bottom: 25px;">${message}</p>
-        
-        <table style="width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 20px; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
-          <thead>
-            <tr>
-              <th colspan="2" style="text-align: left; padding: 12px 15px; background-color: #f8f9fa; color: #1a1a1a; border-bottom: 2px solid #1a1a1a; font-size: 14px; text-transform: uppercase;">Travel Details</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; width: 40%; color: #555;">Employee:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee;">${employeeName}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; width: 40%; color: #555;">Submitter Email:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee;">${emailAddress}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">Department:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee;">${department}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">Designation:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee;">${designation}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">Destination:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee;">${destination}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">Travel Category:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee;">${travelCategory}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">Business Justification:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; color: #1a1a1a; font-weight: 600;">${businessJustification}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">Mode of Transport:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; color: #1a1a1a; font-weight: 600;">${modeOfTransport}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">Per diem Policy:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; color: #1a1a1a; font-weight: 600;">${perDiemPolicy}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">Approval Tier:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; color: #1a1a1a; font-weight: 600;">${approvalTier}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">Cost Centre:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; color: #1a1a1a; font-weight: 600;">${costCentre}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">Within Budget:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; color: #1a1a1a; font-weight: 600;">${withinBudget}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">Travel Dates:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee;">${formattedDepartureDate} to ${formattedReturnDate}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">Estimated Cost:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; color: #28a745; font-weight: 600;">KES ${estimatedCost}</td></tr>
-          </tbody>
-        </table>
-
-        <br>
-
-        <table style="width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
-          <thead>
-            <tr>
-              <th colspan="2" style="text-align: left; padding: 12px 15px; background-color: #f8f9fa; color: #1a1a1a; border-bottom: 2px solid #1a1a1a; font-size: 14px; text-transform: uppercase;">Approval Progress</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HOD Status:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee;">${hodApprovalStatus || "N/A"}</td></tr>
-             <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HOD Approver:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hodApprover || "N/A"}</td></tr>
-             <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HOD Email:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hodEmail || "N/A"}</td></tr>
-             <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HOD Comments:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hodComments || "None"}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HR Status:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee;">${hrApprovalStatus || "N/A"}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HR Approver:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hrApprover || "N/A"}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HR Email:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hrEmail || "N/A"}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">HR Comments:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-style: italic; color: #666;">${hrComments || "None"}</td></tr>
-            <tr><td style="padding: 10px 15px; border-bottom: 1px solid #eee; font-weight: bold; color: #555;">Director Status:</td><td style="padding: 10px 15px; border-bottom: 1px solid #eee;">${directorApprovalStatus || "N/A"}</td></tr>
-            <tr><td style="padding: 10px 15px; font-weight: bold; color: #555;">Director Approver:</td><td style="padding: 10px 15px; font-style: italic; color: #666;">${directorApprover || "N/A"}</td></tr>
-            <tr><td style="padding: 10px 15px; font-weight: bold; color: #555;">Director Email:</td><td style="padding: 10px 15px; font-style: italic; color: #666;">${directorEmail || "N/A"}</td></tr>
-            <tr><td style="padding: 10px 15px; font-weight: bold; color: #555;">Director Comments:</td><td style="padding: 10px 15px; font-style: italic; color: #666;">${directorComments || "None"}</td></tr>
-          </tbody>
-        </table>
-
-        <div style="${buttonStyle} margin-top: 35px; text-align: center;">
-          <a href="${reviewLink}" style="background-color: #1a1a1a; color: #ffffff; padding: 15px 35px; text-decoration: none; border-radius: 10px; font-weight: 700; display: inline-block; font-size: 14px; letter-spacing: 1px;">REVIEW REQUISITION</a>
+        <!-- Header -->
+        <div style="background: linear-gradient(135deg, #1c1c1e 0%, #2d2a26 60%, #4a3f35 100%); border-radius: 20px 20px 0 0; padding: 40px 36px 32px; text-align: center; position: relative; overflow: hidden;">
+          <div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; border-radius: 50%; background: rgba(196,160,96,0.12);"></div>
+          <div style="position: absolute; bottom: -20px; left: -20px; width: 80px; height: 80px; border-radius: 50%; background: rgba(196,160,96,0.08);"></div>
+          <p style="margin: 0 0 8px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: #c4a060; opacity: 0.9;">Hotpoint Appliances Ltd.</p>
+          <h2 style="margin: 0; font-size: 24px; font-weight: 400; letter-spacing: 0.5px; color: #ffffff; font-family: 'Georgia', serif; line-height: 1.3;">${title}</h2>
+          <div style="margin-top: 18px; width: 40px; height: 2px; background: linear-gradient(90deg, #c4a060, #e8c97a); margin-left: auto; margin-right: auto; border-radius: 2px;"></div>
         </div>
-      </div>
 
-      <div style="background-color: #f9f9f9; color: #888; padding: 25px; text-align: center; font-size: 11px;">
-        <p style="margin: 0 0 5px 0;">This is an automated email.</p>
-        <p style="margin: 0; font-weight: 600;">&copy; ${new Date().getFullYear()} Hotpoint Appliances Ltd. All rights reserved.</p>
+        <!-- Body -->
+        <div style="background-color: #ffffff; padding: 36px; border-left: 1px solid #e8e0d4; border-right: 1px solid #e8e0d4;">
+          
+          <!-- Message -->
+          <div style="background: linear-gradient(135deg, #fdf8f0 0%, #faf5ec 100%); border-left: 3px solid #c4a060; border-radius: 0 10px 10px 0; padding: 16px 20px; margin-bottom: 32px;">
+            <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 15px; color: #3a3530; margin: 0; line-height: 1.7;">${message}</p>
+          </div>
+
+          <!-- Travel Details Table -->
+          <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #c4a060; margin: 0 0 12px;">✈ &nbsp;Travel Details</p>
+          <table style="width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.06); margin-bottom: 28px;">
+            <tbody>
+              ${travelRow("Employee", employeeName, true)}
+              ${travelRow("Submitter Email", emailAddress)}
+              ${travelRow("Department", department, true)}
+              ${travelRow("Designation", designation)}
+              ${travelRow("Destination", destination, true)}
+              ${travelRow("Travel Category", travelCategory)}
+              ${travelRow("Business Justification", businessJustification, true)}
+              ${travelRow("Mode of Transport", modeOfTransport)}
+              ${travelRow("Per Diem Policy", perDiemPolicy, true)}
+              ${travelRow("Approval Tier", approvalTier)}
+              ${travelRow("Cost Centre", costCentre, true)}
+              ${travelRow("Within Budget", withinBudget)}
+              ${travelRow("Travel Dates", `${formattedDepartureDate} &rarr; ${formattedReturnDate}`, true)}
+              <tr>
+                <td style="padding: 13px 18px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #7a6a58; background-color: #fdfaf6; width: 38%; border-bottom: none;">Estimated Cost</td>
+                <td style="padding: 13px 18px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 15px; font-weight: 700; color: #2e7d52; background-color: #fdfaf6; border-bottom: none;">KES ${estimatedCost}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Approval Progress Table -->
+          <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #c4a060; margin: 0 0 12px;">✓ &nbsp;Approval Progress</p>
+          <table style="width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.06); margin-bottom: 32px;">
+            <tbody>
+              ${approvalGroupHeader("HOD")}
+              ${approvalRow("Status", hodApprovalStatus, true, hodApprovalStatus)}
+              ${approvalRow("Approver", hodApprover, false)}
+              ${approvalRow("Email", hodEmail, true)}
+              ${approvalRow("Comments", hodComments || "None", false, null, true)}
+              ${approvalGroupHeader("HR")}
+              ${approvalRow("Status", hrApprovalStatus, true, hrApprovalStatus)}
+              ${approvalRow("Approver", hrApprover, false)}
+              ${approvalRow("Email", hrEmail, true)}
+              ${approvalRow("Comments", hrComments || "None", false, null, true)}
+              ${approvalGroupHeader("Director")}
+              ${approvalRow("Status", directorApprovalStatus, true, directorApprovalStatus)}
+              ${approvalRow("Approver", directorApprover, false)}
+              ${approvalRow("Email", directorEmail, true)}
+              ${approvalRow("Comments", directorComments || "None", false, null, false, true)}
+            </tbody>
+          </table>
+
+          <!-- CTA Button -->
+          <div style="${buttonStyle} text-align: center; margin-top: 10px;">
+            <a href="${reviewLink}" style="display: inline-block; background: linear-gradient(135deg, #1c1c1e 0%, #2d2a26 100%); color: #e8c97a; padding: 16px 44px; text-decoration: none; border-radius: 50px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; box-shadow: 0 6px 24px rgba(28,28,30,0.25);">Review Requisition &rarr;</a>
+          </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div style="background: linear-gradient(135deg, #2d2a26 0%, #1c1c1e 100%); border-radius: 0 0 20px 20px; padding: 24px 36px; text-align: center;">
+          <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; color: #888077; margin: 0 0 4px; letter-spacing: 0.5px;">This is an automated notification. Please do not reply to this email.</p>
+          <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; color: #c4a060; margin: 0; font-weight: 600; letter-spacing: 1px;">&copy; ${new Date().getFullYear()} Hotpoint Appliances Ltd. All rights reserved.</p>
+        </div>
+
       </div>
     </div>
   `;
 
   return emailHtml;
+}
+
+// Helper: alternating travel detail rows
+function travelRow(label, value, isAlt = false) {
+  const bg = isAlt ? "#fdfaf6" : "#ffffff";
+  return `
+    <tr>
+      <td style="padding: 13px 18px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #7a6a58; background-color: ${bg}; width: 38%; border-bottom: 1px solid #f0ebe2;">${label}</td>
+      <td style="padding: 13px 18px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; color: #2c2825; background-color: ${bg}; border-bottom: 1px solid #f0ebe2;">${value || "N/A"}</td>
+    </tr>`;
+}
+
+// Helper: approval section group header
+function approvalGroupHeader(label) {
+  return `
+    <tr>
+      <td colspan="2" style="padding: 10px 18px 8px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #ffffff; background: linear-gradient(90deg, #3a3530, #4a3f35);">${label}</td>
+    </tr>`;
+}
+
+// Helper: approval detail row with optional status badge and last-row flag
+function approvalRow(
+  label,
+  value,
+  isAlt = false,
+  statusVal = null,
+  isComment = false,
+  isLast = false,
+) {
+  const bg = isAlt ? "#fdfaf6" : "#ffffff";
+  const borderBottom = isLast ? "none" : "1px solid #f0ebe2";
+  const displayVal = value || "N/A";
+
+  let valueHtml;
+  if (statusVal) {
+    const lower = (statusVal || "").toLowerCase();
+    let badgeColor = "#f59e0b"; // pending — amber
+    let badgeBg = "#fffbeb";
+    if (lower.includes("approved")) {
+      badgeColor = "#2e7d52";
+      badgeBg = "#f0faf5";
+    }
+    if (lower.includes("declined")) {
+      badgeColor = "#c0392b";
+      badgeBg = "#fff5f5";
+    }
+    valueHtml = `<span style="display: inline-block; padding: 4px 12px; border-radius: 50px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; color: ${badgeColor}; background-color: ${badgeBg}; border: 1px solid ${badgeColor}30;">${displayVal}</span>`;
+  } else if (isComment) {
+    valueHtml = `<span style="font-family: 'Georgia', serif; font-size: 13px; font-style: italic; color: #7a6a58;">"${displayVal}"</span>`;
+  } else {
+    valueHtml = `<span style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; color: #2c2825;">${displayVal}</span>`;
+  }
+
+  return `
+    <tr>
+      <td style="padding: 12px 18px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #7a6a58; background-color: ${bg}; width: 38%; border-bottom: ${borderBottom};">${label}</td>
+      <td style="padding: 12px 18px; background-color: ${bg}; border-bottom: ${borderBottom};">${valueHtml}</td>
+    </tr>`;
 }
