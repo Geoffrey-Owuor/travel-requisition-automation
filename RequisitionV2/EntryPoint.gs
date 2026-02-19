@@ -32,6 +32,29 @@ function dateFormatter(dateString) {
   return dateResult;
 }
 
+// Generate an approvalTier
+function generateApprovalTier(estimatedCost, modeOfTravel, travelCategory) {
+  let approvalTier;
+
+  if (
+    travelCategory === "Local" &&
+    modeOfTravel === "Road" &&
+    Number(estimatedCost) < 30000
+  ) {
+    approvalTier = "Tier 1";
+  } else if (
+    travelCategory === "Local" &&
+    (modeOfTravel === "Air" ||
+      (Number(estimatedCost) > 30000 && Number(estimatedCost) < 100000))
+  ) {
+    approvalTier = "Tier 2";
+  } else {
+    approvalTier = "Tier 3";
+  }
+
+  return approvalTier;
+}
+
 // The onFormSubmit Function
 function onFormSubmit(e) {
   // General sheet initialization
@@ -44,6 +67,18 @@ function onFormSubmit(e) {
   // Getting the hod name from the submitted form
   const selectedHod = e.namedValues["HOD Approver"][0];
 
+  // Get the values that will determine the approval tier
+  const estimatedCost = e.namedValues["Total Estimated Cost"][0];
+  const modeOfTravel = e.namedValues["Requested Mode of Travel"][0];
+  const travelCategory = e.namedValues["Travel Category"][0];
+
+  // get the approval tier value
+  const approvalTier = generateApprovalTier(
+    estimatedCost,
+    modeOfTravel,
+    travelCategory,
+  );
+
   // Get the hod email
   const hodEmail = HOD_MAP[selectedHod];
 
@@ -54,11 +89,13 @@ function onFormSubmit(e) {
   const hodStatusCol = headers.indexOf("HOD Approval Status") + 1;
   const hrStatusCol = headers.indexOf("HR Approval Status") + 1;
   const directorStatusCol = headers.indexOf("Director Approval Status") + 1;
+  const approvalTierCol = headers.indexOf("Approval Tier") + 1;
 
   // 2. Update the sheet with the initial values
   sheet.getRange(rowId, hodStatusCol).setValue("Pending");
   sheet.getRange(rowId, hrStatusCol).setValue("N/A");
   sheet.getRange(rowId, directorStatusCol).setValue("N/A");
+  sheet.getRange(rowId, approvalTierCol).setValue(approvalTier);
 
   // Generate the HOD approval url
   const reviewLink = `${webAppUrl}&rowId=${rowId}&email=${hodEmail}&name=${encodeURIComponent(selectedHod)}&stage=HOD`;
