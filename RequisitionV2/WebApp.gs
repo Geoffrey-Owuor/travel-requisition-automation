@@ -7,6 +7,10 @@ function doGet(e) {
 
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
 
+  // Our favicon url
+  const faviconUrl =
+    "https://drive.google.com/uc?export=download&id=1bZv51GB9pJ5S4kfTsP8wj0bMT5J4GV4a#.png";
+
   const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
 
   // 1. Find the specific status column for the current stage
@@ -25,6 +29,7 @@ function doGet(e) {
     return fallback
       .evaluate()
       .setTitle("Request Already Processed")
+      .setFaviconUrl(faviconUrl)
       .addMetaTag("viewport", "width=device-width, initial-scale=1")
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
   }
@@ -64,6 +69,7 @@ function doGet(e) {
   return html
     .evaluate()
     .setTitle(`Review Portal | HAL - ${stage} Approval Stage`)
+    .setFaviconUrl(faviconUrl)
     .addMetaTag("viewport", "width=device-width, initial-scale=1")
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }

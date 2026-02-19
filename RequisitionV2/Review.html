@@ -32,15 +32,15 @@
 
       .header {
         text-align: center;
-        margin-bottom: 30px;
+        margin-bottom: 25px;
       }
 
-      .header h1 {
-        color: var(--primary);
-        margin: 0;
-        font-size: 24px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+      .header-logo {
+        width: 66.6%; /* Sets width to exactly 2/3rds of the container */
+        height: auto; /* Maintains the aspect ratio automatically */
+        display: block; /* Required for margin auto to work */
+        margin: 0 auto; /* Centers the image horizontally */
+        max-width: 100%; /* Ensures it doesn't overflow on tiny screens */
       }
 
       /* Info Card */
@@ -240,7 +240,11 @@
 
     <div class="container">
       <div class="header">
-        <h1>Hotpoint Appliances Ltd</h1>
+        <img
+          src="https://drive.google.com/uc?export=download&id=1HgoS7B2gi3Qdhoa4_wb7pedhOeai3J75#.png"
+          alt="Hotpoint Logo"
+          class="header-logo"
+        />
       </div>
 
       <div class="card">
