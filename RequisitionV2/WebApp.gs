@@ -60,10 +60,10 @@ function doGet(e) {
     businessJustification: values[8],
     requestedModeofTravel: values[9],
     perdiemPolicy: values[10],
-    approvalTier: values[11],
-    estimatedCost: values[12],
-    costCentre: values[13],
-    withinBudget: values[14],
+    estimatedCost: values[11],
+    costCentre: values[12],
+    withinBudget: values[13],
+    approvalTier: values[14],
   };
 
   return html

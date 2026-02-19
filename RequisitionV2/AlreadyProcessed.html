@@ -3,77 +3,183 @@
   <head>
     <base target="_top" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: "Inter", sans-serif;
-        background-color: #f4f7f9;
+        font-family: "DM Sans", sans-serif;
+        background-color: #f0ece4;
         margin: 0;
-        padding: 20px;
+        padding: 24px;
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 80vh;
+        min-height: 100vh;
       }
+
       .card {
-        background: white;
-        border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        padding: 60px;
-        max-width: 500px;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 8px 40px rgba(44, 34, 24, 0.1);
+        padding: 56px 52px 48px;
+        max-width: 480px;
         width: 100%;
         text-align: center;
-        border-top: 5px solid #2c3e50;
+        position: relative;
+        overflow: hidden;
       }
-      .info-icon {
-        width: 80px;
-        height: 80px;
-        margin-bottom: 24px;
+
+      /* Subtle top accent bar */
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #c4a060, #e8c97a, #c4a060);
+      }
+
+      /* Decorative background circle */
+      .card::after {
+        content: "";
+        position: absolute;
+        bottom: -60px;
+        right: -60px;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(196, 160, 96, 0.08) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .icon-wrap {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #fdf8f0, #f5ede0);
+        border: 1.5px solid #e8d9be;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 28px;
+      }
+
+      .icon-wrap svg {
+        width: 34px;
+        height: 34px;
+        stroke: #c4a060;
+        stroke-width: 1.8;
         fill: none;
-        stroke: #2c3e50;
-        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
       }
-      h2 {
-        color: #1a1a1a;
-        margin-top: 0;
-        font-weight: 700;
-      }
-      p {
-        color: #666;
-        font-size: 16px;
-        line-height: 1.6;
-      }
-      .status-badge {
-        display: inline-block;
-        padding: 5px 15px;
-        background: #eee;
-        border-radius: 20px;
-        font-weight: bold;
+
+      .eyebrow {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 3px;
         text-transform: uppercase;
-        font-size: 12px;
-        color: #333;
-        margin-top: 10px;
+        color: #c4a060;
+        margin: 0 0 10px;
+      }
+
+      h2 {
+        font-family: "DM Serif Display", serif;
+        color: #1c1a17;
+        margin: 0 0 16px;
+        font-size: 26px;
+        font-weight: 400;
+        line-height: 1.25;
+      }
+
+      p {
+        color: #6b5e50;
+        font-size: 15px;
+        line-height: 1.7;
+        margin: 0 0 24px;
+      }
+
+      strong {
+        color: #1c1a17;
+        font-weight: 600;
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 20px;
+        background: #fdf8f0;
+        border: 1.5px solid #e8d9be;
+        border-radius: 50px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: #7a5c30;
+        margin-bottom: 24px;
+      }
+
+      .status-badge::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #c4a060;
+        flex-shrink: 0;
+      }
+
+      .footnote {
+        font-size: 13px;
+        color: #b0a090;
+        line-height: 1.6;
+        margin: 0;
+        padding-top: 20px;
+        border-top: 1px solid #f0ebe2;
       }
     </style>
   </head>
   <body>
     <div class="card">
-      <svg class="info-icon" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="12" y1="16" x2="12" y2="12"></line>
-        <line x1="12" y1="8" x2="12.01" y2="8"></line>
-      </svg>
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"></circle>
+          <line x1="12" y1="16" x2="12" y2="11.5"></line>
+          <circle
+            cx="12"
+            cy="8.5"
+            r="0.5"
+            fill="#c4a060"
+            stroke="none"
+          ></circle>
+        </svg>
+      </div>
+
+      <p class="eyebrow">Notice</p>
       <h2>Action Already Taken</h2>
+
       <p>
         This travel requisition has already been processed at the
         <strong><?= stage ?></strong> stage.
       </p>
-      <div class="status-badge">Current Status: <?= status ?></div>
-      <p style="font-size: 14px; color: #999; margin-top: 20px">
-        You cannot modify this record further. If this is an error, please
-        contact the system administrator.
+
+      <div class="status-badge">Status: <?= status ?></div>
+
+      <p class="footnote">
+        You cannot modify this record further. If you believe this is an error,
+        please contact your system administrator.
       </p>
     </div>
   </body>
