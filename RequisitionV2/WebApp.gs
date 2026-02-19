@@ -9,7 +9,7 @@ function doGet(e) {
 
   // Our favicon url
   const faviconUrl =
-    "https://drive.google.com/uc?export=download&id=YOUR_FAVICON_FILE_ID#.png";
+    "https://lh3.googleusercontent.com/u/0/d/YOUR_FAVICON_FILE_ID#.png";
 
   const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
 
