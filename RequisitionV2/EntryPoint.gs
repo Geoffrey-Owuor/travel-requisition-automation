@@ -1,5 +1,5 @@
 // Defining our base link
-const webAppUrl = `https://script.google.com/macros/s/AKfycbycDJPV5Y4uGAxd1oSc-89aTwwam8F--p8UzTA35Na27ho-joK1dhCVgYT7rormKAXr/exec?authuser=${0}`;
+const webAppUrl = `https://script.google.com/macros/s/AKfycbw6wuuz5KDg1Nfgx4o3TWV8ERsmmfe_-BaFVqFut0OHS-ah-PifZNAsvjn-xD6AFAyvbg/exec?authuser=${0}`;
 
 // DIRECTORS ARRAY
 const DIRECTOR_APPROVERS = [
@@ -56,9 +56,9 @@ function onFormSubmit(e) {
   const directorStatusCol = headers.indexOf("Director Approval Status") + 1;
 
   // 2. Update the sheet with the initial values
-  sheet.getRange(rowId, hodStatusCol).setValue("pending");
-  sheet.getRange(rowId, hrStatusCol).setValue("n/a");
-  sheet.getRange(rowId, directorStatusCol).setValue("n/a");
+  sheet.getRange(rowId, hodStatusCol).setValue("Pending");
+  sheet.getRange(rowId, hrStatusCol).setValue("N/A");
+  sheet.getRange(rowId, directorStatusCol).setValue("N/A");
 
   // Generate the HOD approval url
   const reviewLink = `${webAppUrl}&rowId=${rowId}&email=${hodEmail}&name=${encodeURIComponent(selectedHod)}&stage=HOD`;
