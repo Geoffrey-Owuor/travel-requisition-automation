@@ -27,7 +27,11 @@ const HOD_MAP = {
 // Date Formatter
 function dateFormatter(dateString) {
   const date = new Date(dateString);
-  const dateResult = date.toLocaleDateString();
+  const dateResult = date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 
   return dateResult;
 }
