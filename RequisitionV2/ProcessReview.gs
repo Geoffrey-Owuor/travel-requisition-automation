@@ -38,11 +38,9 @@ function processReview({ rowId, stage, name, email, status, comment }) {
   // We fetch them after updating the sheets to get the latest values
   const hodEmailCol = headers.indexOf("HOD Email") + 1;
   const hrEmailCol = headers.indexOf("HR Email") + 1;
-  const directorEmailCol = headers.indexOf("Director Email") + 1;
 
   const hodEmail = sheet.getRange(rowId, hodEmailCol).getValue();
   const hrEmail = sheet.getRange(rowId, hrEmailCol).getValue();
-  const directorEmail = sheet.getRange(rowId, directorEmailCol).getValue();
 
   // Default function which runs if we have an unknown stage passed to our function
   function notificationMailer() {

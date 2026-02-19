@@ -44,7 +44,7 @@ function directorApprovalStage({
     });
 
     MailApp.sendEmail({
-      to: [hodEmail, hrEmail],
+      to: [hodEmail, hrEmail].join(","),
       subject: `Final Update: Travel Requisition Declined By ${name}`,
       htmlBody: hodHrHtmlBody,
     });
@@ -90,7 +90,7 @@ function directorApprovalStage({
     });
 
     MailApp.sendEmail({
-      to: [hrEmail, hodEmail],
+      to: [hrEmail, hodEmail].join(","),
       subject: `Final Update: Travel Requisition Approved By ${name}`,
       htmlBody: hodHrHtmlBody,
     });
