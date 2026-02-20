@@ -90,7 +90,7 @@ function hodApprovalStage({
 
         // Send email to the hr Approver
         MailApp.sendEmail({
-          to: hrApprover.Email,
+          to: hrApprover.email,
           subject: "Action Required: New Travel Requisition",
           htmlBody: hrHtmlBody,
         });

@@ -57,7 +57,7 @@ function generateApprovalTier(estimatedCost, modeOfTravel, travelCategory) {
   if (
     travelCategory === "Local" &&
     modeOfTravel === "Road" &&
-    Number(estimatedCost) < 30000
+    Number(estimatedCost) <= 30000
   ) {
     approvalTier = "Tier 1";
   } else if (
@@ -101,8 +101,9 @@ function onFormSubmit(e) {
     (hodApprover) => hodApprover.name === selectedHod,
   );
 
-  // get the hod uuid - or fall back to an invalid string
+  // get the hod uuid and email - or fall back to an invalid string
   const hodUuid = hodObject ? hodObject.uuid : "invalid_uuid";
+  const hodEmail = hodObject ? hodObject.email : "invalid_email";
 
   // Get the sheet headers
   const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
