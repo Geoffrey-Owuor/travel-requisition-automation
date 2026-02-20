@@ -17,7 +17,6 @@ function hrApprovalStage({
         "Your travel requisition has been declined at the HR Approval Stage.",
       title: `Final Update: Travel Requisition Declined By ${name}`,
       role: "user",
-      showPdfDownload: true,
     });
 
     // Generate hod email html
@@ -27,7 +26,6 @@ function hrApprovalStage({
         "This travel requisition has been declined at the HR Approval Stage.",
       title: `Final Update: Travel Requisition Declined By ${name}`,
       role: "user",
-      showPdfDownload: true,
     });
 
     //Generate the hr email html
@@ -36,7 +34,6 @@ function hrApprovalStage({
       message: "You have declined this travel requisition.",
       title: "Final Update: Travel Requisition Declined",
       role: "user",
-      showPdfDownload: true,
     });
 
     // send the emails
