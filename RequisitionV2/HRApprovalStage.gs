@@ -121,7 +121,7 @@ function hrApprovalStage({
 
         // Send email to the Director Approver
         MailApp.sendEmail({
-          to: directorApprover.Email,
+          to: directorApprover.email,
           subject: "Action Required: New Travel Requisition",
           htmlBody: directorHtmlBody,
         });
