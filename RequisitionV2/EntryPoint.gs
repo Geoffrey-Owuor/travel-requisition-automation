@@ -4,25 +4,39 @@ const webAppUrl = `https://script.google.com/macros/s/YOUR_V2_DEPLOYMENT_ID/exec
 // DIRECTORS ARRAY
 const DIRECTOR_APPROVERS = [
   {
-    Name: "Approver Name 1",
-    Email: "approver1@example.com",
+    name: "Approver Name 1",
+    email: "approver1@example.com",
+    uuid: "00000000-0000-4000-8000-000000000001",
   },
 ];
 
 // HR ARRAY
 const HR_APPROVERS = [
   {
-    Name: "Approver Name 3",
-    Email: "approver3@example.com",
+    name: "Approver Name 3",
+    email: "approver3@example.com",
+    uuid: "00000000-0000-4000-8000-000000000002",
   },
 ];
 
-// HOD MAPPING
-const HOD_MAP = {
-  "Approver Name 2": "approver2@example.com",
-  "Director Name 2": "director2@example.com",
-  "Director Name 3": "director3@example.com",
-};
+// HOD ARRAY
+const HOD_APPROVERS = [
+  {
+    name: "Approver Name 2",
+    email: "approver2@example.com",
+    uuid: "00000000-0000-4000-8000-000000000003",
+  },
+  {
+    name: "Director Name 2",
+    email: "director2@example.com",
+    uuid: "00000000-0000-4000-8000-000000000004",
+  },
+  {
+    name: "Director Name 3",
+    email: "director3@example.com",
+    uuid: "00000000-0000-4000-8000-000000000005",
+  },
+];
 
 // Date Formatter
 function dateFormatter(dateString) {
@@ -47,13 +61,12 @@ function generateApprovalTier(estimatedCost, modeOfTravel, travelCategory) {
   ) {
     approvalTier = "Tier 1";
   } else if (
-    travelCategory === "Local" &&
-    (modeOfTravel === "Air" ||
-      (Number(estimatedCost) > 30000 && Number(estimatedCost) < 100000))
+    travelCategory === "International" ||
+    Number(estimatedCost) >= 100000
   ) {
-    approvalTier = "Tier 2";
-  } else {
     approvalTier = "Tier 3";
+  } else {
+    approvalTier = "Tier 2";
   }
 
   return approvalTier;
@@ -83,8 +96,13 @@ function onFormSubmit(e) {
     travelCategory,
   );
 
-  // Get the hod email
-  const hodEmail = HOD_MAP[selectedHod];
+  // Get the hod object from the HOD's array
+  const hodObject = HOD_APPROVERS.find(
+    (hodApprover) => hodApprover.name === selectedHod,
+  );
+
+  // get the hod uuid - or fall back to an invalid string
+  const hodUuid = hodObject ? hodObject.uuid : "invalid_uuid";
 
   // Get the sheet headers
   const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
@@ -102,7 +120,7 @@ function onFormSubmit(e) {
   sheet.getRange(rowId, approvalTierCol).setValue(approvalTier);
 
   // Generate the HOD approval url
-  const reviewLink = `${webAppUrl}&rowId=${rowId}&email=${hodEmail}&name=${encodeURIComponent(selectedHod)}&stage=HOD`;
+  const reviewLink = `${webAppUrl}&rowId=${rowId}&token=${hodUuid}&stage=HOD`;
 
   // Generating the user email html template
   const userHtmlBody = EmailTemplate({

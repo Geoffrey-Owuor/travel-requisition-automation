@@ -107,7 +107,7 @@ function hrApprovalStage({
       // Send emails to the required directors
       DIRECTOR_APPROVERS.forEach((directorApprover) => {
         //  Generate a reviewLink
-        const reviewLink = `${webAppUrl}&rowId=${rowId}&email=${directorApprover.Email}&name=${encodeURIComponent(directorApprover.Name)}&stage=Director`;
+        const reviewLink = `${webAppUrl}&rowId=${rowId}&token=${directorApprover.uuid}&stage=Director`;
 
         // Generate a Director email html
         const directorHtmlBody = EmailTemplate({

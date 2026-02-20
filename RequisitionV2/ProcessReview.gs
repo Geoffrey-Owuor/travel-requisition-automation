@@ -24,11 +24,8 @@ function processReview({ rowId, stage, name, email, status, comment }) {
   sheet.getRange(rowId, commentCol).setValue(comment);
   sheet.getRange(rowId, approverEmailCol).setValue(email);
 
-  // If stage is not HOD, update the approver Name column
-  // HOD name is gotten from form submission data hence we do not need to update it
-  if (stage !== "HOD") {
-    sheet.getRange(rowId, approverNameCol).setValue(name);
-  }
+  // We just update HOD Name also (Data Integrity)
+  sheet.getRange(rowId, approverNameCol).setValue(name);
 
   // The approver emails columns (used for sending follow-up emails)
   // We fetch them after updating the sheets to get the latest values
