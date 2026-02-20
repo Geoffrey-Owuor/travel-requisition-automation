@@ -1,4 +1,13 @@
-function EmailTemplate({ rowId, message, title, role, reviewLink }) {
+const PDF_WEB_APP_URL = `https://script.google.com/macros/s/AKfycbzgZyrYpsoSyzG6GB4xRG6dYShO95pmXqKUgImQ2YW8fEtnkxrKjflwhbZ02kAmas7lgQ/exec?authuser=${0}`;
+
+function EmailTemplate({
+  rowId,
+  message,
+  title,
+  role,
+  reviewLink,
+  showPdfDownload = false,
+}) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
 
   const lastCol = sheet.getLastColumn();
@@ -38,6 +47,9 @@ function EmailTemplate({ rowId, message, title, role, reviewLink }) {
   const formattedReturnDate = dateFormatter(returnDate);
 
   const buttonStyle = role !== "user" ? "display: block;" : "display: none;";
+  const pdfButtonStyle = showPdfDownload
+    ? "display: block; margin-top: 14px;"
+    : "display: none;";
 
   const emailHtml = `
     <div style="font-family: 'Georgia', 'Times New Roman', serif; background-color: #f0ece4; padding: 40px 20px; min-height: 100%;">
@@ -106,10 +118,20 @@ function EmailTemplate({ rowId, message, title, role, reviewLink }) {
             </tbody>
           </table>
 
-          <!-- CTA Button -->
-          <div style="${buttonStyle} text-align: center; margin-top: 10px;">
-            <a href="${reviewLink}" style="display: inline-block; background: linear-gradient(135deg, #1c1c1e 0%, #2d2a26 100%); color: #e8c97a; padding: 16px 44px; text-decoration: none; border-radius: 50px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; box-shadow: 0 6px 24px rgba(28,28,30,0.25);">Review Requisition &rarr;</a>
-          </div>
+          <!-- CTA Buttons -->
+           <div style="text-align: center; margin-top: 10px;">
+  
+            <!-- Review Requisition (approvers only) -->
+            <div style="${buttonStyle}">
+              <a href="${reviewLink}" style="display: inline-block; background: linear-gradient(135deg, #1c1c1e 0%, #2d2a26 100%); color: #e8c97a; padding: 16px 44px; text-decoration: none; border-radius: 50px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; box-shadow: 0 6px 24px rgba(28,28,30,0.25);">Review Requisition &rarr;</a>
+            </div>
+
+            <!-- Download PDF (everyone) -->
+            <div style="${pdfButtonStyle}">
+              <a href="${PDF_WEB_APP_URL}&rowId=${rowId}" style="display: inline-block; background: linear-gradient(135deg, #4a3f35 0%, #3a3530 100%); color: #e8c97a; padding: 14px 40px; text-decoration: none; border-radius: 50px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; box-shadow: 0 6px 20px rgba(28,28,30,0.2);">&#11123; &nbsp;Download PDF</a>
+            </div>
+
+           </div>
 
         </div>
 
