@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+  <head>
+    <base target="_top" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "DM Sans", sans-serif;
+        background-color: #f0ece4;
+        margin: 0;
+        padding: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .card {
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 8px 40px rgba(44, 34, 24, 0.1);
+        padding: 56px 52px 48px;
+        max-width: 480px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Subtle top accent bar — red/rose tone for error state */
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #b85c5c, #e07878, #b85c5c);
+      }
+
+      /* Decorative background circle */
+      .card::after {
+        content: "";
+        position: absolute;
+        bottom: -60px;
+        right: -60px;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(184, 92, 92, 0.07) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .icon-wrap {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #fdf5f5, #f5e0e0);
+        border: 1.5px solid #e8bebe;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 28px;
+      }
+
+      .icon-wrap svg {
+        width: 34px;
+        height: 34px;
+        stroke: #b85c5c;
+        stroke-width: 1.8;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .eyebrow {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #b85c5c;
+        margin: 0 0 10px;
+      }
+
+      h2 {
+        font-family: "DM Serif Display", serif;
+        color: #1c1a17;
+        margin: 0 0 16px;
+        font-size: 26px;
+        font-weight: 400;
+        line-height: 1.25;
+      }
+
+      p {
+        color: #6b5e50;
+        font-size: 15px;
+        line-height: 1.7;
+        margin: 0 0 24px;
+      }
+
+      strong {
+        color: #1c1a17;
+        font-weight: 600;
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 20px;
+        background: #fdf5f5;
+        border: 1.5px solid #e8bebe;
+        border-radius: 50px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: #7a3030;
+        margin-bottom: 24px;
+      }
+
+      .status-badge::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #b85c5c;
+        flex-shrink: 0;
+      }
+
+      .footnote {
+        font-size: 13px;
+        color: #b0a090;
+        line-height: 1.6;
+        margin: 0;
+        padding-top: 20px;
+        border-top: 1px solid #f0ebe2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="icon-wrap">
+        <!-- Key with a slash/broken indicator -->
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"
+          ></path>
+        </svg>
+      </div>
+
+      <p class="eyebrow">Error</p>
+      <h2>Invalid Token</h2>
+
+      <p>
+        The link you followed contains a token that is
+        <strong>expired or invalid</strong>. This may happen if the link was
+        already used or has exceeded its validity period.
+      </p>
+
+      <div class="status-badge">Status: Token Rejected</div>
+
+      <p class="footnote">
+        Please request a new link or contact your system administrator if you
+        believe this is an error.
+      </p>
+    </div>
+  </body>
+</html>

@@ -76,7 +76,7 @@ function hodApprovalStage({
       // Send emails to the required hr approvers
       HR_APPROVERS.forEach((hrApprover) => {
         //  Generate a reviewLink
-        const reviewLink = `${webAppUrl}&rowId=${rowId}&email=${hrApprover.Email}&name=${encodeURIComponent(hrApprover.Name)}&stage=HR`;
+        const reviewLink = `${webAppUrl}&rowId=${rowId}&token=${hrApprover.uuid}&stage=HR`;
 
         // Generate an HR email html
         const hrHtmlBody = EmailTemplate({

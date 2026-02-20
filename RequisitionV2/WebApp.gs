@@ -2,14 +2,46 @@
 function doGet(e) {
   const rowId = e.parameter.rowId;
   const stage = e.parameter.stage;
-  const name = e.parameter.name;
-  const email = e.parameter.email;
-
+  const token = e.parameter.token;
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
 
   // Our favicon url
   const faviconUrl =
     "https://lh3.googleusercontent.com/u/0/d/1bZv51GB9pJ5S4kfTsP8wj0bMT5J4GV4a#.png";
+
+  //Determine which array we need to check based on the stage
+  let arrayMapper;
+
+  switch (stage) {
+    case "HOD":
+      arrayMapper = HOD_APPROVERS;
+      break;
+    case "HR":
+      arrayMapper = HR_APPROVERS;
+      break;
+    case "Director":
+      arrayMapper = DIRECTOR_APPROVERS;
+      break;
+    default:
+      arrayMapper = undefined;
+      break;
+  }
+
+  // Check if the uuid passed is valid
+  const approverObject = arrayMapper.find(
+    (approver) => approver.uuid === token,
+  );
+
+  // Invalid token - return the Invalid Token UI
+  if (!approverObject) {
+    const fallback = HtmlService.createTemplateFromFile("InvalidToken");
+    return fallback
+      .evaluate()
+      .setTitle("Invalid Token")
+      .setFaviconUrl(faviconUrl)
+      .addMetaTag("viewport", "width=device-width, initial-scale=1")
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  }
 
   const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
 
@@ -34,7 +66,7 @@ function doGet(e) {
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
   }
 
-  // 3. STANDARD PATH: If status is "pending" or "n/a", continue to the Review Portal
+  // 3. STANDARD PATH: If status is "pending" or "n/a" and token is not invalid, continue to the Review Portal
   const lastCol = sheet.getLastColumn();
   // Fetching the specific row data (Columns 2 to lastCol)
   const values = sheet.getRange(rowId, 2, 1, lastCol - 1).getValues()[0];
@@ -48,8 +80,8 @@ function doGet(e) {
   // Pass variables (submitted values) to the HTML
   html.rowId = rowId;
   html.stage = stage;
-  html.name = name;
-  html.email = email;
+  html.name = approverObject.name;
+  html.email = approverObject.email;
   html.details = {
     employeeName: values[1],
     department: values[2],
