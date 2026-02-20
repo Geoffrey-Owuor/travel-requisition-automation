@@ -17,6 +17,7 @@ function hrApprovalStage({
         "Your travel requisition has been declined at the HR Approval Stage.",
       title: `Final Update: Travel Requisition Declined By ${name}`,
       role: "user",
+      showPdfDownload: true,
     });
 
     // Generate hod email html
@@ -26,6 +27,7 @@ function hrApprovalStage({
         "This travel requisition has been declined at the HR Approval Stage.",
       title: `Final Update: Travel Requisition Declined By ${name}`,
       role: "user",
+      showPdfDownload: true,
     });
 
     //Generate the hr email html
@@ -34,6 +36,7 @@ function hrApprovalStage({
       message: "You have declined this travel requisition.",
       title: "Final Update: Travel Requisition Declined",
       role: "user",
+      showPdfDownload: true,
     });
 
     // send the emails
@@ -66,6 +69,7 @@ function hrApprovalStage({
         message: `Your travel requisition has been approved by ${name}.`,
         title: `Final Update: Travel Requisition Approved By ${name}`,
         role: "user",
+        showPdfDownload: true,
       });
 
       // Generate the hod email html
@@ -74,6 +78,7 @@ function hrApprovalStage({
         message: `This travel requisition has been approved by ${name}.`,
         title: `Final Update: Travel Requisition Approved By ${name}`,
         role: "user",
+        showPdfDownload: true,
       });
 
       // Generate hr email html
@@ -82,6 +87,7 @@ function hrApprovalStage({
         message: "You have approved this travel requisition.",
         title: "Final Update: Travel Requisition Approved",
         role: "user",
+        showPdfDownload: true,
       });
 
       // send the emails
