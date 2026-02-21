@@ -103,17 +103,17 @@ function EmailTemplate({
               ${approvalGroupHeader("HOD")}
               ${approvalRow("Status", hodApprovalStatus, true, hodApprovalStatus)}
               ${approvalRow("Approver", hodApprover, false)}
-              ${approvalRow("Email", hodEmail, true)}
+              ${approvalRow("Email", hodEmail, true, null, false, false, true)}
               ${approvalRow("Comments", hodComments || "None", false, null, true)}
               ${approvalGroupHeader("HR")}
               ${approvalRow("Status", hrApprovalStatus, true, hrApprovalStatus)}
               ${approvalRow("Approver", hrApprover, false)}
-              ${approvalRow("Email", hrEmail, true)}
+              ${approvalRow("Email", hrEmail, true, null, false, false, true)}
               ${approvalRow("Comments", hrComments || "None", false, null, true)}
               ${approvalGroupHeader("Director")}
               ${approvalRow("Status", directorApprovalStatus, true, directorApprovalStatus)}
               ${approvalRow("Approver", directorApprover, false)}
-              ${approvalRow("Email", directorEmail, true)}
+              ${approvalRow("Email", directorEmail, true, null, false, false, true)}
               ${approvalRow("Comments", directorComments || "None", false, null, false, true)}
             </tbody>
           </table>
@@ -177,10 +177,14 @@ function approvalRow(
   statusVal = null,
   isComment = false,
   isLast = false,
+  truncate = false,
 ) {
   const bg = isAlt ? "#fdfaf6" : "#ffffff";
   const borderBottom = isLast ? "none" : "1px solid #f0ebe2";
   const displayVal = value || "N/A";
+  const truncateStyle = truncate
+    ? "max-width: 0; width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+    : "";
 
   let valueHtml;
   if (statusVal) {
@@ -205,6 +209,6 @@ function approvalRow(
   return `
     <tr>
       <td style="padding: 12px 18px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #7a6a58; background-color: ${bg}; width: 38%; border-bottom: ${borderBottom};">${label}</td>
-      <td style="padding: 12px 18px; background-color: ${bg}; border-bottom: ${borderBottom};">${valueHtml}</td>
+      <td style="${truncateStyle} padding: 12px 18px; background-color: ${bg}; border-bottom: ${borderBottom};">${valueHtml}</td>
     </tr>`;
 }
