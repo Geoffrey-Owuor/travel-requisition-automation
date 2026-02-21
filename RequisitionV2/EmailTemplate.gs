@@ -59,13 +59,13 @@ function EmailTemplate({
         <div style="background: linear-gradient(135deg, #1c1c1e 0%, #2d2a26 60%, #4a3f35 100%); border-radius: 20px 20px 0 0; padding: 40px 36px 32px; text-align: center; position: relative; overflow: hidden;">
           <div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; border-radius: 50%; background: rgba(196,160,96,0.12);"></div>
           <div style="position: absolute; bottom: -20px; left: -20px; width: 80px; height: 80px; border-radius: 50%; background: rgba(196,160,96,0.08);"></div>
-          <p style="margin: 0 0 8px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: #c4a060; opacity: 0.9;">Hotpoint Appliances Ltd.</p>
+          <p style="margin: 12px 0 8px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: #c4a060; opacity: 0.9;">Hotpoint Appliances Ltd.</p>
           <h2 style="margin: 0; font-size: 24px; font-weight: 400; letter-spacing: 0.5px; color: #ffffff; font-family: 'Georgia', serif; line-height: 1.3;">${title}</h2>
           <div style="margin-top: 18px; width: 40px; height: 2px; background: linear-gradient(90deg, #c4a060, #e8c97a); margin-left: auto; margin-right: auto; border-radius: 2px;"></div>
         </div>
 
         <!-- Body -->
-        <div style="background-color: #ffffff; padding: 36px; border-left: 1px solid #e8e0d4; border-right: 1px solid #e8e0d4;">
+        <div style="background-color: #ffffff; padding: 36px 20px; border-left: 1px solid #e8e0d4; border-right: 1px solid #e8e0d4;">
           
           <!-- Message -->
           <div style="background: linear-gradient(135deg, #fdf8f0 0%, #faf5ec 100%); border-left: 3px solid #c4a060; border-radius: 0 10px 10px 0; padding: 16px 20px; margin-bottom: 32px;">
@@ -77,7 +77,7 @@ function EmailTemplate({
           <table style="width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.06); margin-bottom: 28px;">
             <tbody>
               ${travelRow("Employee", employeeName, true)}
-              ${travelRow("Submitter Email", emailAddress)}
+              ${travelRow("Submitter Email", emailAddress, false, true)}
               ${travelRow("Department", department, true)}
               ${travelRow("Designation", designation)}
               ${travelRow("Destination", destination, true)}
@@ -149,15 +149,18 @@ function EmailTemplate({
 }
 
 // Helper: alternating travel detail rows
-function travelRow(label, value, isAlt = false) {
+function travelRow(label, value, isAlt = false, truncate = false) {
   const bg = isAlt ? "#fdfaf6" : "#ffffff";
+  const valueTdExtra = truncate
+    ? "max-width: 0; width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+    : "";
+
   return `
     <tr>
       <td style="padding: 13px 18px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #7a6a58; background-color: ${bg}; width: 38%; border-bottom: 1px solid #f0ebe2;">${label}</td>
-      <td style="padding: 13px 18px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; color: #2c2825; background-color: ${bg}; border-bottom: 1px solid #f0ebe2;">${value || "N/A"}</td>
+      <td style="${valueTdExtra} padding: 13px 18px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; color: #2c2825; background-color: ${bg}; border-bottom: 1px solid #f0ebe2;">${value || "N/A"}</td>
     </tr>`;
 }
-
 // Helper: approval section group header
 function approvalGroupHeader(label) {
   return `
