@@ -1,6 +1,6 @@
 // Our global constants
 const SPREADSHEET_ID = "11IQpitHKfNSx4dZSk9mcIOjOKVCknE3GrR0anNuezFc";
-const SHEET_NAME = "Form Resopnses 1";
+const SHEET_NAME = "Form Responses 1";
 const faviconUrl =
   "https://lh3.googleusercontent.com/u/0/d/1bZv51GB9pJ5S4kfTsP8wj0bMT5J4GV4a#.png";
 
@@ -191,7 +191,7 @@ function doGet(e) {
 
           <!-- Footer -->
           <div class="footer">
-            <p>This is an automated document. Please do not reply to this email.</p>
+            <p>This is an automated document.</p>
             <p class="copy">&copy; ${new Date().getFullYear()} Hotpoint Appliances Ltd. All rights reserved.</p>
           </div>
 
@@ -201,7 +201,7 @@ function doGet(e) {
   `;
 
   return HtmlService.createHtmlOutput(html)
-    .setTitle(`Travel Requisition — ${employeeName}`)
+    .setTitle(`Travel Requisition - ${employeeName}`)
     .setFaviconUrl(faviconUrl)
     .addMetaTag("viewport", "width=device-width, initial-scale=1")
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
