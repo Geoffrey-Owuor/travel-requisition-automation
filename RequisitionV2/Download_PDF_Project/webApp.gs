@@ -103,6 +103,7 @@ function doGet(e) {
           .cost { font-size: 15px; font-weight: 700; color: #2e7d52; }
 
           /* Download button */
+          .btn-wrap { display: flex; justify-content: flex-end; margin-bottom: 28px; }
           .btn { display: inline-block; background: linear-gradient(135deg, #1c1c1e 0%, #2d2a26 100%); color: #e8c97a; padding: 16px 44px; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; box-shadow: 0 6px 24px rgba(28,28,30,0.25); cursor: pointer; border: none; }
 
           /* Footer */
@@ -123,6 +124,11 @@ function doGet(e) {
       <body>
         <div class="wrapper">
 
+          <!-- Top bar with download button -->
+          <div class="btn-wrap">
+            <button class="btn" onclick="window.print()">⬇ &nbsp;Download PDF</button>
+          </div>
+
           <!-- Header -->
           <div class="header">
             <div class="bubble1"></div>
@@ -134,11 +140,6 @@ function doGet(e) {
 
           <!-- Body -->
           <div class="body">
-
-            <!-- Top bar with download button -->
-            <div style="display: flex; justify-content: flex-end; margin-bottom: 28px;">
-              <button class="btn" onclick="window.print()">⬇ &nbsp;Download PDF</button>
-            </div>
 
             <!-- Travel Details -->
             <p class="section-label">✈ &nbsp;Travel Details</p>
