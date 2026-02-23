@@ -1,6 +1,6 @@
 # Travel Requisition Automation
 
-This Google Apps Script project automates the travel requisition process, allowing employees to submit travel requests via a Google Form, which are then routed for approval by HR and a Director. The system provides email notifications and a web-based interface for reviewers to approve or decline requests.
+This Google Apps Script project automates the travel requisition process, allowing employees to submit travel requests via a Google Form, which are then routed for approval by a HOD, HR or a Director. The system provides email notifications and a web-based interface for reviewers to approve or decline requests.
 
 ## Table of Contents
 
