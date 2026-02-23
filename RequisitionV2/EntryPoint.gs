@@ -114,11 +114,15 @@ function onFormSubmit(e) {
   const directorStatusCol = headers.indexOf("Director Approval Status") + 1;
   const approvalTierCol = headers.indexOf("Approval Tier") + 1;
 
+  // Generate status for HR Approval and Director Approval Statuses
+  const hrStatus = approvalTier === "Tier 2" ? "Pending" : "N/A";
+  const directorStatus = approvalTier === "Tier 3" ? "Pending" : "N/A";
+
   // 2. Update the sheet with the initial values
-  sheet.getRange(rowId, hodStatusCol).setValue("Pending");
-  sheet.getRange(rowId, hrStatusCol).setValue("N/A");
-  sheet.getRange(rowId, directorStatusCol).setValue("N/A");
   sheet.getRange(rowId, approvalTierCol).setValue(approvalTier);
+  sheet.getRange(rowId, hodStatusCol).setValue("Pending");
+  sheet.getRange(rowId, hrStatusCol).setValue(hrStatus);
+  sheet.getRange(rowId, directorStatusCol).setValue(directorStatus);
 
   // Generate the HOD approval url
   const reviewLink = `${webAppUrl}&rowId=${rowId}&token=${hodUuid}&stage=HOD`;
