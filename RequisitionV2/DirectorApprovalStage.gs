@@ -43,17 +43,32 @@ function directorApprovalStage({
       htmlBody: directorHtmlBody,
     });
 
-    MailApp.sendEmail({
-      to: [hodEmail, hrEmail].join(","),
-      subject: `Final Update: Travel Requisition Declined By ${name}`,
-      htmlBody: hodHrHtmlBody,
-    });
+    // Sending emails if requestor is an HOD
+    if (hodEmail === userEmail) {
+      MailApp.sendEmail({
+        to: hrEmail,
+        subject: `Final Update: Travel Requisition Declined By ${name}`,
+        htmlBody: hodHrHtmlBody,
+      });
 
-    MailApp.sendEmail({
-      to: userEmail,
-      subject: `Final Update: Travel Requisition Declined By ${name}`,
-      htmlBody: userHtmlBody,
-    });
+      MailApp.sendEmail({
+        to: userEmail,
+        subject: `Final Update: Travel Requisition Declined By ${name}`,
+        htmlBody: userHtmlBody,
+      });
+    } else {
+      MailApp.sendEmail({
+        to: [hodEmail, hrEmail].join(","),
+        subject: `Final Update: Travel Requisition Declined By ${name}`,
+        htmlBody: hodHrHtmlBody,
+      });
+
+      MailApp.sendEmail({
+        to: userEmail,
+        subject: `Final Update: Travel Requisition Declined By ${name}`,
+        htmlBody: userHtmlBody,
+      });
+    }
   }
 
   //Director approved the request - the flow ends here (We notify involved parties of the approval)
@@ -92,16 +107,30 @@ function directorApprovalStage({
       htmlBody: directorHtmlBody,
     });
 
-    MailApp.sendEmail({
-      to: [hrEmail, hodEmail].join(","),
-      subject: `Final Update: Travel Requisition Approved By ${name}`,
-      htmlBody: hodHrHtmlBody,
-    });
+    if (hodEmail === userEmail) {
+      MailApp.sendEmail({
+        to: hrEmail,
+        subject: `Final Update: Travel Requisition Approved By ${name}`,
+        htmlBody: hodHrHtmlBody,
+      });
 
-    MailApp.sendEmail({
-      to: userEmail,
-      subject: `Final Update: Travel Requisition Approved By ${name}`,
-      htmlBody: userHtmlBody,
-    });
+      MailApp.sendEmail({
+        to: userEmail,
+        subject: `Final Update: Travel Requisition Approved By ${name}`,
+        htmlBody: userHtmlBody,
+      });
+    } else {
+      MailApp.sendEmail({
+        to: [hrEmail, hodEmail].join(","),
+        subject: `Final Update: Travel Requisition Approved By ${name}`,
+        htmlBody: hodHrHtmlBody,
+      });
+
+      MailApp.sendEmail({
+        to: userEmail,
+        subject: `Final Update: Travel Requisition Approved By ${name}`,
+        htmlBody: userHtmlBody,
+      });
+    }
   }
 }

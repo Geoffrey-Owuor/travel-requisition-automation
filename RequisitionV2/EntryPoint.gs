@@ -135,7 +135,8 @@ function onFormSubmit(e) {
   // Generating the user email html template
   const userHtmlBody = EmailTemplate({
     rowId: rowId,
-    message: "Your travel requisition has been submitted successfully.",
+    message:
+      "Your travel requisition has been submitted successfully and forwarded to the HOD for approval.",
     title: "Update: Travel Requisition Successfully Submitted",
     role: "user",
   });
@@ -150,23 +151,33 @@ function onFormSubmit(e) {
     reviewLink: reviewLink,
   });
 
-  // Generate the finalHOD email template if the requester is an HOD
-  const finalHODHtmlBody = EmailTemplate({
-    rowId: rowId,
-    message: "This is an automatic HOD approval for your travel requisition",
-    title: "Final Update: Travel Requisition Approved",
-    role: "user",
-    showPdfDownload: true,
-  });
-
   // LOGIC FOR WHEN SUBMITTER IS AN HOD
   if (hodEmail === userEmail) {
-    // This is a final HOD automatic approval
     // Update hod related data and send the final email update
+    sheet.getRange(rowId, hodStatusCol).setValue("Approved");
+    sheet.getRange(rowId, hodEmailCol).setValue(userEmail);
+    sheet.getRange(rowId, hodCommentsCol).setValue("Automatic HOD Approval");
+
+    // HOD Confirmation Email
+    const confirmationHODBody = EmailTemplate({
+      rowId: rowId,
+      message:
+        "Your travel requisition has been successfully submitted and forwarded to HR for approval",
+      title: "Update: Travel requisition submitted successfully",
+      role: "user",
+    });
+
+    // This is a final HOD automatic approval
     if (approvalTier === "Tier 1") {
-      sheet.getRange(rowId, hodStatusCol).setValue("Approved");
-      sheet.getRange(rowId, hodEmailCol).setValue(userEmail);
-      sheet.getRange(rowId, hodCommentsCol).setValue("Automatic HOD Approval");
+      // Generate the finalHOD email template if the requester is an HOD
+      const finalHODHtmlBody = EmailTemplate({
+        rowId: rowId,
+        message:
+          "This is an automatic HOD approval for your travel requisition",
+        title: "Final Update: Travel Requisition Approved",
+        role: "user",
+        showPdfDownload: true,
+      });
 
       // Email sending
       MailApp.sendEmail({
@@ -196,6 +207,13 @@ function onFormSubmit(e) {
           subject: "Action Required: New Travel Requisition",
           htmlBody: hrHtmlBody,
         });
+      });
+
+      // Send confirmation email to the HOD
+      MailApp.sendEmail({
+        to: userEmail,
+        subject: "Update: Travel requisition successfully submitted",
+        htmlBody: confirmationHODBody,
       });
     }
   } else {

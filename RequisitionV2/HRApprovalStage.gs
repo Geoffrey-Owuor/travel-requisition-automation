@@ -43,17 +43,25 @@ function hrApprovalStage({
       htmlBody: hrHtmlBody,
     });
 
-    MailApp.sendEmail({
-      to: hodEmail,
-      subject: `Final Update: Travel Requisition Declined By ${name}`,
-      htmlBody: hodHtmlBody,
-    });
+    if (userEmail === hodEmail) {
+      MailApp.sendEmail({
+        to: userEmail,
+        subject: `Final Update: Travel Requisition Declined By ${name}`,
+        htmlBody: userHtmlBody,
+      });
+    } else {
+      MailApp.sendEmail({
+        to: hodEmail,
+        subject: `Final Update: Travel Requisition Declined By ${name}`,
+        htmlBody: hodHtmlBody,
+      });
 
-    MailApp.sendEmail({
-      to: userEmail,
-      subject: `Final Update: Travel Requisition Declined By ${name}`,
-      htmlBody: userHtmlBody,
-    });
+      MailApp.sendEmail({
+        to: userEmail,
+        subject: `Final Update: Travel Requisition Declined By ${name}`,
+        htmlBody: userHtmlBody,
+      });
+    }
   }
 
   //HR approved the request - decide whether the flow ends here or is passed to the director
@@ -94,17 +102,26 @@ function hrApprovalStage({
         htmlBody: hrHtmlBody,
       });
 
-      MailApp.sendEmail({
-        to: hodEmail,
-        subject: `Final Update: Travel Requisition Approved By ${name}`,
-        htmlBody: hodHtmlBody,
-      });
+      // If the requester was an HOD, only send one email
+      if (userEmail === hodEmail) {
+        MailApp.sendEmail({
+          to: userEmail,
+          subject: `Final Update: Travel Requisition Approved By ${name}`,
+          htmlBody: userHtmlBody,
+        });
+      } else {
+        MailApp.sendEmail({
+          to: hodEmail,
+          subject: `Final Update: Travel Requisition Approved By ${name}`,
+          htmlBody: hodHtmlBody,
+        });
 
-      MailApp.sendEmail({
-        to: userEmail,
-        subject: `Final Update: Travel Requisition Approved By ${name}`,
-        htmlBody: userHtmlBody,
-      });
+        MailApp.sendEmail({
+          to: userEmail,
+          subject: `Final Update: Travel Requisition Approved By ${name}`,
+          htmlBody: userHtmlBody,
+        });
+      }
     } else {
       // The requisition requires the next approval - Director Approval
       // Send emails to the required directors
@@ -164,17 +181,26 @@ function hrApprovalStage({
         htmlBody: hrHtmlBody,
       });
 
-      MailApp.sendEmail({
-        to: hodEmail,
-        subject: `Update: Travel Requisition Approved By ${name}`,
-        htmlBody: hodHtmlBody,
-      });
+      // Send one email if requestor is an HOD
+      if (hodEmail === userEmail) {
+        MailApp.sendEmail({
+          to: userEmail,
+          subject: `Update: Travel Requisition Approved By ${name}`,
+          htmlBody: userHtmlBody,
+        });
+      } else {
+        MailApp.sendEmail({
+          to: hodEmail,
+          subject: `Update: Travel Requisition Approved By ${name}`,
+          htmlBody: hodHtmlBody,
+        });
 
-      MailApp.sendEmail({
-        to: userEmail,
-        subject: `Update: Travel Requisition Approved By ${name}`,
-        htmlBody: userHtmlBody,
-      });
+        MailApp.sendEmail({
+          to: userEmail,
+          subject: `Update: Travel Requisition Approved By ${name}`,
+          htmlBody: userHtmlBody,
+        });
+      }
     }
   }
 }

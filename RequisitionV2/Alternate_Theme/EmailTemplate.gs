@@ -111,7 +111,7 @@ function EmailTemplate({
               ${approvalRow("Status", directorApprovalStatus, true, directorApprovalStatus)}
               ${approvalRow("Approver", directorApprover, false)}
               ${approvalRow("Email", directorEmail, true, null, false, false, true)}
-              ${approvalRow("Comments", directorComments || "None", false, null, false, true)}
+              ${approvalRow("Comments", directorComments || "None", false, null, true, true)}
             </tbody>
           </table>
 
