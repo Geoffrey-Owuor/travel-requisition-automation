@@ -3,7 +3,7 @@
   <head>
     <base target="_top" />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -14,8 +14,8 @@
       }
 
       body {
-        font-family: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        background-color: #f4f4f4; /* Light gray background */
+        font-family: "DM Sans", sans-serif;
+        background-color: #f7f3f3; /* Mist Rose background */
         margin: 0;
         padding: 24px;
         display: flex;
@@ -26,8 +26,8 @@
 
       .card {
         background: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        border-radius: 20px;
+        box-shadow: 0 8px 40px rgba(62, 44, 44, 0.08); /* Warm shadow */
         padding: 56px 52px 48px;
         max-width: 480px;
         width: 100%;
@@ -36,18 +36,18 @@
         overflow: hidden;
       }
 
-      /* Bold red top accent bar */
+      /* Deep Crimson top accent bar */
       .card::before {
         content: "";
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        height: 6px;
-        background: #c8102e; /* Hotpoint Red */
+        height: 4px;
+        background: linear-gradient(90deg, #a31d1d, #d9534f, #a31d1d);
       }
 
-      /* Subtle decorative background circle */
+      /* Decorative background circle */
       .card::after {
         content: "";
         position: absolute;
@@ -58,8 +58,8 @@
         border-radius: 50%;
         background: radial-gradient(
           circle,
-          rgba(200, 16, 46, 0.04) 0%,
-          /* Faint red */ transparent 70%
+          rgba(163, 29, 29, 0.05) 0%,
+          transparent 70%
         );
         pointer-events: none;
       }
@@ -68,8 +68,8 @@
         width: 72px;
         height: 72px;
         border-radius: 50%;
-        background: #fff5f5; /* Very light red tint */
-        border: 2px solid #fbcfe8; /* Soft red border */
+        background: linear-gradient(135deg, #fff5f5, #f9f0f0);
+        border: 1.5px solid #f2d7d5;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -79,74 +79,75 @@
       .icon-wrap svg {
         width: 34px;
         height: 34px;
-        stroke: #c8102e; /* Hotpoint Red */
-        stroke-width: 2;
+        stroke: #a31d1d; /* Deep Crimson */
+        stroke-width: 1.8;
         fill: none;
         stroke-linecap: round;
         stroke-linejoin: round;
       }
 
       .eyebrow {
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 2px;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 3px;
         text-transform: uppercase;
-        color: #c8102e; /* Hotpoint Red */
+        color: #a31d1d; /* Deep Crimson */
         margin: 0 0 10px;
       }
 
       h2 {
-        color: #1a1a1a; /* Rich Black */
+        font-family: "DM Serif Display", serif;
+        color: #2c1a1a; /* Warm Dark Brown-Red */
         margin: 0 0 16px;
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 1.3;
+        font-size: 26px;
+        font-weight: 400;
+        line-height: 1.25;
       }
 
       p {
-        color: #333333; /* Dark Gray */
+        color: #453535; /* Warm Charcoal */
         font-size: 15px;
         line-height: 1.7;
         margin: 0 0 24px;
       }
 
       strong {
-        color: #1a1a1a;
-        font-weight: 700;
+        color: #2c1a1a;
+        font-weight: 600;
       }
 
       .status-badge {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
+        gap: 7px;
         padding: 8px 20px;
-        background: #fff5f5; /* Light red background for error */
-        border: 1px solid #fbcfe8; /* Soft red border */
+        background: #fffafa; /* Ultra light rose */
+        border: 1.5px solid #f2e8e8;
         border-radius: 50px;
         font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 1px;
+        font-weight: 600;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
-        color: #c8102e; /* Red text */
+        color: #a31d1d;
         margin-bottom: 24px;
       }
 
       .status-badge::before {
         content: "";
-        width: 8px;
-        height: 8px;
+        width: 7px;
+        height: 7px;
         border-radius: 50%;
-        background: #c8102e; /* Red dot */
+        background: #a31d1d;
         flex-shrink: 0;
       }
 
       .footnote {
         font-size: 13px;
-        color: #757575; /* Accent gray */
+        color: #8c7474; /* Muted Rose-Gray */
         line-height: 1.6;
         margin: 0;
         padding-top: 20px;
-        border-top: 1px solid #e0e0e0;
+        border-top: 1px solid #f2e8e8;
       }
     </style>
   </head>

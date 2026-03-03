@@ -3,7 +3,7 @@
   <head>
     <base target="_top" />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -14,26 +14,25 @@
       }
 
       :root {
-        --red: #c8102e;
-        --black: #1a1a1a;
-        --bg-gray: #f4f4f4;
+        /* Updated to Red-ish Theme */
+        --gold: #a31d1d; /* Deep Crimson */
+        --gold-light: #d9534f; /* Soft Red */
+        --gold-bg: #fff5f5; /* Very Light Rose */
+        --gold-border: #f2d7d5; /* Soft Red Border */
+        --dark: #2c1a1a; /* Deep Dark Brown-Red */
+        --warm-bg: #f7f3f3; /* Mist Rose Background */
         --white: #ffffff;
-        --text: #333333;
-        --muted: #757575;
-        --border: #e0e0e0;
-
-        --success-text: #166534;
-        --success-bg: #dcfce7;
-        --success-btn: #2e7d52;
-
-        --danger-text: #991b1b;
-        --danger-bg: #fee2e2;
-        --danger-btn: #c0392b;
+        --text: #453535; /* Warm Dark Gray */
+        --muted: #8c7474; /* Muted Rose-Gray */
+        --success: #2e7d52; /* Kept for functional clarity */
+        --success-bg: #f0faf5;
+        --danger: #c0392b;
+        --danger-bg: #fff5f5;
       }
 
       body {
-        font-family: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        background-color: var(--bg-gray);
+        font-family: "DM Sans", sans-serif;
+        background-color: var(--warm-bg);
         margin: 0;
         padding: 28px 20px 48px;
         display: flex;
@@ -62,8 +61,8 @@
       /* Cards */
       .card {
         background: var(--white);
-        border-radius: 12px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        border-radius: 20px;
+        box-shadow: 0 6px 32px rgba(62, 44, 44, 0.08);
         padding: 32px;
         margin-bottom: 20px;
         position: relative;
@@ -76,14 +75,20 @@
         top: 0;
         left: 0;
         right: 0;
-        height: 6px;
-        background: var(--red);
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--gold),
+          var(--gold-light),
+          var(--gold)
+        );
       }
 
       .card-title {
-        font-size: 22px;
-        font-weight: 700;
-        color: var(--black);
+        font-family: "DM Serif Display", serif;
+        font-size: 20px;
+        font-weight: 400;
+        color: var(--dark);
         margin: 0 0 6px;
         display: flex;
         align-items: center;
@@ -93,18 +98,20 @@
 
       .card-divider {
         border: none;
-        border-top: 1px solid var(--border);
+        border-top: 1px solid #f2e8e8;
         margin: 16px 0 24px;
       }
 
       .stage-badge {
-        font-size: 11px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 10px;
         font-weight: 700;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
-        background: var(--black);
-        color: var(--white);
-        padding: 6px 16px;
+        background: var(--gold-bg);
+        color: var(--gold);
+        border: 1.5px solid var(--gold-border);
+        padding: 5px 14px;
         border-radius: 50px;
         white-space: nowrap;
       }
@@ -118,15 +125,14 @@
 
       .detail-item {
         padding: 14px 16px;
-        border-bottom: 1px solid var(--border);
-        border-right: 1px solid var(--border);
+        border-bottom: 1px solid #f9f0f0;
+        border-right: 1px solid #f9f0f0;
       }
 
       .detail-item:nth-child(even) {
         border-right: none;
       }
 
-      /* Remove bottom border from last two items */
       .detail-item:nth-last-child(-n + 2):not(.detail-item--full) {
         border-bottom: none;
       }
@@ -138,9 +144,9 @@
       }
 
       .label {
-        font-size: 11px;
+        font-size: 10px;
         font-weight: 700;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
         color: var(--muted);
         margin-bottom: 5px;
@@ -159,7 +165,7 @@
         align-items: center;
         gap: 6px;
         padding: 5px 14px;
-        border-radius: 4px;
+        border-radius: 50px;
         font-size: 11px;
         font-weight: 700;
         letter-spacing: 1px;
@@ -176,29 +182,29 @@
 
       .budget-yes {
         background-color: var(--success-bg);
-        color: var(--success-text);
-        border: 1px solid rgba(22, 101, 52, 0.2);
+        color: var(--success);
+        border: 1.5px solid rgba(46, 125, 82, 0.2);
       }
       .budget-yes::before {
-        background: var(--success-text);
+        background: var(--success);
       }
 
       .budget-no {
         background-color: var(--danger-bg);
-        color: var(--danger-text);
-        border: 1px solid rgba(153, 27, 27, 0.2);
+        color: var(--danger);
+        border: 1.5px solid rgba(192, 57, 43, 0.2);
       }
       .budget-no::before {
-        background: var(--danger-text);
+        background: var(--danger);
       }
 
       /* Form */
       .form-label {
         font-size: 12px;
         font-weight: 700;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
-        color: var(--black);
+        color: var(--muted);
         display: block;
         margin-bottom: 10px;
       }
@@ -206,13 +212,13 @@
       textarea {
         width: 100%;
         height: 110px;
-        border: 1.5px solid var(--border);
-        border-radius: 8px;
+        border: 1.5px solid #ebdada;
+        border-radius: 12px;
         padding: 14px 16px;
         font-family: "DM Sans", sans-serif;
         font-size: 14px;
         color: var(--text);
-        background: #fafafa;
+        background: var(--gold-bg);
         resize: vertical;
         transition:
           border-color 0.2s,
@@ -220,14 +226,14 @@
       }
 
       textarea::placeholder {
-        color: #999999;
+        color: #bfa8a8;
       }
 
       textarea:focus {
         outline: none;
-        border-color: var(--red);
-        box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.15);
-        background: var(--white);
+        border-color: var(--gold);
+        box-shadow: 0 0 0 3px rgba(163, 29, 29, 0.1);
+        background: #fff;
       }
 
       /* Buttons */
@@ -241,11 +247,11 @@
       button {
         padding: 15px;
         border: none;
-        border-radius: 6px;
+        border-radius: 12px;
         font-family: "DM Sans", sans-serif;
         font-weight: 700;
-        font-size: 13px;
-        letter-spacing: 1.5px;
+        font-size: 12px;
+        letter-spacing: 2px;
         text-transform: uppercase;
         cursor: pointer;
         transition:
@@ -263,8 +269,8 @@
       }
 
       .btn-approve {
-        background: var(--success-btn);
-        color: var(--white);
+        background: linear-gradient(135deg, #2e7d52, #3da368);
+        color: #fff;
         box-shadow: 0 4px 16px rgba(46, 125, 82, 0.25);
       }
 
@@ -273,8 +279,8 @@
       }
 
       .btn-decline {
-        background: var(--danger-btn);
-        color: var(--white);
+        background: linear-gradient(135deg, #c0392b, #e04535);
+        color: #fff;
         box-shadow: 0 4px 16px rgba(192, 57, 43, 0.22);
       }
 
@@ -296,7 +302,7 @@
         display: none;
         position: fixed;
         inset: 0;
-        background: rgba(244, 244, 244, 0.92);
+        background: rgba(247, 243, 243, 0.92);
         backdrop-filter: blur(4px);
         justify-content: center;
         align-items: center;
@@ -308,17 +314,17 @@
       .spinner {
         width: 42px;
         height: 42px;
-        border: 3px solid var(--border);
-        border-top-color: var(--red);
+        border: 3px solid #f2d7d5;
+        border-top-color: var(--gold);
         border-radius: 50%;
         animation: spin 0.8s linear infinite;
       }
 
       .overlay-text {
         font-size: 13px;
-        font-weight: 700;
+        font-weight: 600;
         letter-spacing: 1px;
-        color: var(--black);
+        color: var(--gold);
         text-transform: uppercase;
       }
 
@@ -334,8 +340,8 @@
 
       .success-card {
         background: var(--white);
-        border-radius: 12px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        border-radius: 20px;
+        box-shadow: 0 6px 32px rgba(62, 44, 44, 0.08);
         padding: 60px 52px;
         max-width: 460px;
         width: 100%;
@@ -349,16 +355,21 @@
         top: 0;
         left: 0;
         right: 0;
-        height: 6px;
-        background: var(--red);
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--gold),
+          var(--gold-light),
+          var(--gold)
+        );
       }
 
       .success-icon-wrap {
         width: 72px;
         height: 72px;
         border-radius: 50%;
-        background: var(--bg-gray);
-        border: 2px solid var(--border);
+        background: linear-gradient(135deg, #fff5f5, #f9f0f0);
+        border: 1.5px solid var(--gold-border);
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -368,7 +379,7 @@
       .success-icon-wrap svg {
         width: 32px;
         height: 32px;
-        stroke: var(--black);
+        stroke: var(--gold);
         stroke-width: 2;
         stroke-linecap: round;
         stroke-linejoin: round;
@@ -450,7 +461,7 @@
           </div>
           <div class="detail-item">
             <div class="label">Estimated Cost</div>
-            <div class="value" style="font-weight: 700; color: var(--red)">
+            <div class="value" style="font-weight: 700; color: var(--success)">
               KES <?= details.estimatedCost ?>
             </div>
           </div>
@@ -489,22 +500,22 @@
             id="approveBtn"
             onclick="submit('Approved')"
           >
-            ✓ &nbsp;Approve
+            ✓ Approve
           </button>
           <button
             class="btn-decline"
             id="declineBtn"
             onclick="submit('Declined')"
           >
-            ✕ &nbsp;Decline
+            ✕ Decline
           </button>
         </div>
       </div>
 
       <div class="footer">
         <p>
-          &copy; <?= new Date().getFullYear() ?> Hotpoint Appliances Ltd. All
-          rights reserved.
+          © <?= new Date().getFullYear() ?> Hotpoint Appliances Ltd. All rights
+          reserved.
         </p>
         <p>Travel Requisition System</p>
       </div>
@@ -523,7 +534,6 @@
           .withSuccessHandler(function () {
             const container = document.querySelector(".container");
             container.classList.add("success-container");
-            // Template literal updated to match the new Red and Black theme
             container.innerHTML = `
               <div class="success-card">
                 <div class="success-icon-wrap">
@@ -532,10 +542,10 @@
                     <polyline points="16 9 11 14 8 11"></polyline>
                   </svg>
                 </div>
-                <p style="font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--red); margin: 0 0 10px;">Confirmed</p>
-                <h2 style="color: var(--black); margin: 0 0 16px; font-size: 24px; font-weight: 700;">Decision Recorded</h2>
-                <p style="font-size: 15px; color: var(--text); line-height: 1.7; margin: 0 0 24px;">The travel requisition has been updated successfully.</p>
-                <p style="font-size: 13px; color: var(--muted); margin: 0; padding-top: 20px; border-top: 1px solid var(--border);">You may now safely close this window.</p>
+                <p style="font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin: 0 0 10px;">Confirmed</p>
+                <h2 style="font-family: 'DM Serif Display', serif; color: var(--dark); margin: 0 0 16px; font-size: 26px; font-weight: 400;">Decision Recorded</h2>
+                <p style="font-size: 15px; color: var(--muted); line-height: 1.7; margin: 0 0 24px;">The travel requisition has been updated successfully.</p>
+                <p style="font-size: 13px; color: #bfa8a8; margin: 0; padding-top: 20px; border-top: 1px solid #f2e8e8;">You may now safely close this window.</p>
               </div>
             `;
             document.getElementById("overlay").style.display = "none";

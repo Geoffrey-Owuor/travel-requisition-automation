@@ -56,83 +56,102 @@ function doGet(e) {
           * { box-sizing: border-box; margin: 0; padding: 0; }
           body { 
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-            background-color: #F4F4F4; 
+            background-color: #f7f3f3; /* Mist Rose */
             padding: 40px 20px; 
-            color: #333333;
           }
 
-          .wrapper { max-width: 680px; margin: 0 auto; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+          .wrapper { max-width: 680px; margin: 0 auto; }
 
-          /* Header */
+          /* Header - Deep Crimson Theme */
           .header {
-            background: linear-gradient(135deg, #C8102E 0%, #1A1A1A 80%);
-            border-radius: 8px 8px 0 0;
+            background: linear-gradient(135deg, #a31d1d 0%, #7a1515 100%);
+            border-radius: 20px 20px 0 0;
             padding: 40px 36px 32px;
             text-align: center;
             position: relative;
             overflow: hidden;
           }
-          .header .bubble1 { position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,0.1); }
-          .header .bubble2 { position: absolute; bottom: -20px; left: -20px; width: 80px; height: 80px; border-radius: 50%; background: rgba(0,0,0,0.2); }
-          .header .brand { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #FFFFFF; opacity: 0.8; margin-bottom: 8px; }
-          .header h1 { font-size: 26px; font-weight: 600; color: #FFFFFF; letter-spacing: 0.5px; }
-          .header .divider { margin: 18px auto 0; width: 50px; height: 3px; background-color: #C8102E; }
+          .header .bubble1 { position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,0.05); }
+          .header .bubble2 { position: absolute; bottom: -20px; left: -20px; width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.03); }
+          .header .brand { font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: #f2d7d5; margin-bottom: 8px; }
+          .header h1 { font-family: Georgia, serif; font-size: 24px; font-weight: 400; color: #ffffff; }
+          .header .divider { margin: 18px auto 0; width: 40px; height: 2px; background: #ffffff; opacity: 0.3; border-radius: 2px; }
 
           /* Body */
-          .body { background: #FFFFFF; padding: 36px; border-left: 1px solid #E0E0E0; border-right: 1px solid #E0E0E0; }
+          .body { 
+            background: #ffffff; 
+            padding: 36px; 
+            border-left: 1px solid #f2d7d5; 
+            border-right: 1px solid #f2d7d5; 
+          }
 
           /* Section label */
-          .section-label { font-size: 12px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: #C8102E; margin: 0 0 15px; border-bottom: 2px solid #E0E0E0; padding-bottom: 8px; }
+          .section-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #a31d1d; margin: 0 0 12px; }
 
           /* Tables */
-          .data-table { width: 100%; border-collapse: collapse; margin-bottom: 35px; }
-          .approval-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; border: 1px solid #E0E0E0; }
-          td { padding: 12px 15px; border-bottom: 1px solid #E0E0E0; font-size: 14px; }
-          td.label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #757575; width: 35%; }
-          td.alt { background-color: #FAFAFA; }
+          table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 16px rgba(163,29,29,0.05); margin-bottom: 32px; }
+          td { padding: 13px 18px; border-bottom: 1px solid #f9f0f0; font-size: 13px; color: #453535; }
+          td.label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #8c7474; width: 38%; }
+          td.alt { background-color: #fffafa; }
           td.no-border { border-bottom: none; }
-          
-          /* Strong values */
-          td.val { font-weight: 600; color: #1A1A1A; }
 
-          /* Badge */
-          .badge { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
-          .badge.pending { color: #d97706; background: #fffbeb; }
-          .badge.approved { color: #166534; background: #dcfce7; }
-          .badge.declined { color: #991b1b; background: #fee2e2; }
+          /* Badge Logic */
+          .badge { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+          .badge.pending { color: #856404; background: #fff3cd; border: 1px solid rgba(133,100,4,0.2); }
+          .badge.approved { color: #155724; background: #d4edda; border: 1px solid rgba(21,87,36,0.2); }
+          .badge.declined { color: #721c24; background: #f8d7da; border: 1px solid rgba(114,28,36,0.2); }
 
           /* Comment */
-          .comment { font-size: 14px; font-style: italic; color: #757575; }
+          .comment { font-family: Georgia, serif; font-size: 13px; font-style: italic; color: #6e5a5a; }
 
           /* Group header */
-          .group-header td { padding: 10px 15px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #FFFFFF; background-color: #1A1A1A; border-bottom: none; }
+          .group-header td { 
+            padding: 10px 18px; 
+            font-size: 10px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            color: #ffffff; 
+            background: #453535; /* Dark Warm Neutral */
+            border-bottom: none; 
+          }
 
           /* Cost */
-          .cost-row td { background-color: #C8102E; color: #FFFFFF; border-bottom: none; }
-          .cost-label { color: #FFFFFF !important; font-weight: 700; }
-          .cost-val { font-size: 18px; font-weight: 700; color: #FFFFFF !important; }
+          .cost { font-size: 16px; font-weight: 700; color: #a31d1d; }
 
           /* Download button */
-          .btn-wrap { display: flex; justify-content: flex-end; margin-bottom: 20px; }
-          .btn { display: inline-block; background-color: #1A1A1A; color: #FFFFFF; padding: 12px 28px; text-decoration: none; border-radius: 4px; font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; border: none; transition: background-color 0.2s;}
-          .btn:hover { background-color: #333333; }
+          .btn-wrap { display: flex; justify-content: flex-end; margin-bottom: 28px; }
+          .btn { 
+            display: inline-block; 
+            background: #a31d1d; 
+            color: #ffffff; 
+            padding: 14px 32px; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            font-weight: 700; 
+            font-size: 11px; 
+            letter-spacing: 1.5px; 
+            text-transform: uppercase; 
+            box-shadow: 0 4px 12px rgba(163,29,29,0.2); 
+            cursor: pointer; 
+            border: none;
+            transition: all 0.2s ease;
+          }
+          .btn:hover { background: #7a1515; transform: translateY(-1px); }
 
           /* Footer */
-          .footer { background: #1A1A1A; border-radius: 0 0 8px 8px; padding: 24px 36px; text-align: center; }
-          .footer p { font-size: 11px; color: #999999; margin-bottom: 8px; letter-spacing: 0.5px; }
-          .footer .copy { color: #FFFFFF; font-weight: 600; letter-spacing: 1px; margin: 0; }
+          .footer { background: #2c1a1a; border-radius: 0 0 20px 20px; padding: 24px 36px; text-align: center; }
+          .footer p { font-size: 10px; color: #8c7474; margin-bottom: 4px; letter-spacing: 0.5px; }
+          .footer .copy { color: #f2d7d5; font-weight: 600; letter-spacing: 1px; margin: 0; }
 
           /* Print/PDF styles */
           @media print {
             body { background: white; padding: 0; }
             .btn-wrap { display: none; }
-            .wrapper { max-width: 100%; box-shadow: none; }
-            .header { border-radius: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .footer { border-radius: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .cost-row td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .group-header td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            td.alt { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .wrapper { max-width: 100%; }
+            .header { border-radius: 0; -webkit-print-color-adjust: exact; }
+            .footer { border-radius: 0; -webkit-print-color-adjust: exact; }
+            .group-header td { -webkit-print-color-adjust: exact; }
           }
         </style>
       </head>
@@ -140,7 +159,7 @@ function doGet(e) {
         <div class="wrapper">
 
           <div class="btn-wrap">
-            <button class="btn" onclick="window.print()">⬇ &nbsp;Download PDF</button>
+            <button class="btn" onclick="window.print()">Download Report PDF</button>
           </div>
 
           <div class="header">
@@ -153,8 +172,8 @@ function doGet(e) {
 
           <div class="body">
 
-            <p class="section-label">✈ &nbsp;Travel Details</p>
-            <table class="data-table">
+            <p class="section-label">Travel Details</p>
+            <table>
               <tbody>
                 ${row("Employee", employeeName, true)}
                 ${row("Submitter Email", emailAddress)}
@@ -169,27 +188,29 @@ function doGet(e) {
                 ${row("Cost Centre", costCentre, true)}
                 ${row("Within Budget", withinBudget)}
                 ${row("Travel Dates", formattedDepartureDate + " → " + formattedReturnDate, true)}
-                <tr class="cost-row">
-                  <td class="label cost-label no-border">Estimated Cost</td>
-                  <td class="val cost-val no-border">KES ${estimatedCost}</td>
+                <tr>
+                  <td class="label alt no-border">Estimated Cost</td>
+                  <td class="alt no-border cost">KES ${estimatedCost}</td>
                 </tr>
               </tbody>
             </table>
 
-            <p class="section-label">✓ &nbsp;Approval Progress</p>
-            <table class="approval-table">
+            <p class="section-label">Approval Progress</p>
+            <table>
               <tbody>
-                ${groupHeader("HOD")}
+                ${groupHeader("Head of Department")}
                 ${statusRow("Status", hodApprovalStatus, true)}
                 ${row("Approver", hodApprover)}
                 ${row("Email", hodEmail, true)}
                 ${commentRow("Comments", hodComments)}
-                ${groupHeader("HR")}
+
+                ${groupHeader("Human Resources")}
                 ${statusRow("Status", hrApprovalStatus, true)}
                 ${row("Approver", hrApprover)}
                 ${row("Email", hrEmail, true)}
                 ${commentRow("Comments", hrComments)}
-                ${groupHeader("Director")}
+
+                ${groupHeader("Executive Director")}
                 ${statusRow("Status", directorApprovalStatus, true)}
                 ${row("Approver", directorApprover)}
                 ${row("Email", directorEmail, true)}
@@ -200,7 +221,7 @@ function doGet(e) {
           </div>
 
           <div class="footer">
-            <p>This is an automated document.</p>
+            <p>This is a system-generated summary of Travel Requisition #${rowId}.</p>
             <p class="copy">&copy; ${new Date().getFullYear()} Hotpoint Appliances Ltd. All rights reserved.</p>
           </div>
 
@@ -210,7 +231,7 @@ function doGet(e) {
   `;
 
   return HtmlService.createHtmlOutput(html)
-    .setTitle(`Travel Requisition - ${employeeName}`)
+    .setTitle(`Summary - ${employeeName}`)
     .addMetaTag("viewport", "width=device-width, initial-scale=1")
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
