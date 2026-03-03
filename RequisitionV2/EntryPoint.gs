@@ -78,9 +78,6 @@ function onFormSubmit(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   const rowId = sheet.getLastRow();
 
-  // get the user's email address
-  const userEmail = sheet.getRange(rowId, 2).getValue();
-
   // Getting the hod name from the submitted form
   const selectedHod = e.namedValues["HOD Approver"][0];
 
@@ -108,11 +105,19 @@ function onFormSubmit(e) {
   // Get the sheet headers
   const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
 
+  // get the user's email
+  const userEmailCol = headers.indexOf("Email Address") + 1;
+  const userEmail = sheet.getRange(rowId, userEmailCol).getValue();
+
   // 1. Get the columns to edit
   const hodStatusCol = headers.indexOf("HOD Approval Status") + 1;
   const hrStatusCol = headers.indexOf("HR Approval Status") + 1;
   const directorStatusCol = headers.indexOf("Director Approval Status") + 1;
   const approvalTierCol = headers.indexOf("Approval Tier") + 1;
+
+  // HOD Columns for automatic approval
+  const hodEmailCol = headers.indexOf("HOD Email") + 1;
+  const hodCommentsCol = headers.indexOf("HOD Comments") + 1;
 
   // Generate status for HR Approval and Director Approval Statuses
   const hrStatus = approvalTier === "Tier 2" ? "Pending" : "N/A";
@@ -145,17 +150,69 @@ function onFormSubmit(e) {
     reviewLink: reviewLink,
   });
 
-  // Send email to hod
-  MailApp.sendEmail({
-    to: hodEmail,
-    subject: "Action Required: Travel Requisition Review",
-    htmlBody: hodHtmlBody,
+  // Generate the finalHOD email template if the requester is an HOD
+  const finalHODHtmlBody = EmailTemplate({
+    rowId: rowId,
+    message: "This is an automatic HOD approval for your travel requisition",
+    title: "Final Update: Travel Requisition Approved",
+    role: "user",
+    showPdfDownload: true,
   });
 
-  // Send email to the user
-  MailApp.sendEmail({
-    to: userEmail,
-    subject: "Update: Travel Requisition Successfully Submitted",
-    htmlBody: userHtmlBody,
-  });
+  // LOGIC FOR WHEN SUBMITTER IS AN HOD
+  if (hodEmail === userEmail) {
+    // This is a final HOD automatic approval
+    // Update hod related data and send the final email update
+    if (approvalTier === "Tier 1") {
+      sheet.getRange(rowId, hodStatusCol).setValue("Approved");
+      sheet.getRange(rowId, hodEmailCol).setValue(userEmail);
+      sheet.getRange(rowId, hodCommentsCol).setValue("Automatic HOD Approval");
+
+      // Email sending
+      MailApp.sendEmail({
+        to: userEmail,
+        subject: "Final Update: Travel Requisition Approved",
+        htmlBody: finalHODHtmlBody,
+      });
+    } else {
+      // Send email to HR Approvers (A more higher approval tier)
+      HR_APPROVERS.forEach((hrApprover) => {
+        //  Generate a reviewLink
+        const reviewLink = `${webAppUrl}&rowId=${rowId}&token=${hrApprover.uuid}&stage=HR`;
+
+        // Generate an HR email html
+        const hrHtmlBody = EmailTemplate({
+          rowId: rowId,
+          message:
+            "A new travel requisition has been submitted and requires your approval",
+          title: "Action Required: New Travel Requisition",
+          role: "HR",
+          reviewLink: reviewLink,
+        });
+
+        // Send email to the hr Approver
+        MailApp.sendEmail({
+          to: hrApprover.email,
+          subject: "Action Required: New Travel Requisition",
+          htmlBody: hrHtmlBody,
+        });
+      });
+    }
+  } else {
+    // FOLLOW THE NORMAL WORKFLOW
+
+    // Send email to hod
+    MailApp.sendEmail({
+      to: hodEmail,
+      subject: "Action Required: Travel Requisition Review",
+      htmlBody: hodHtmlBody,
+    });
+
+    // Send email to the user
+    MailApp.sendEmail({
+      to: userEmail,
+      subject: "Update: Travel Requisition Successfully Submitted",
+      htmlBody: userHtmlBody,
+    });
+  }
 }
