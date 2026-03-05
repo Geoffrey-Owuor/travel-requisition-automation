@@ -120,7 +120,8 @@ function onFormSubmit(e) {
   const hodCommentsCol = headers.indexOf("HOD Comments") + 1;
 
   // Generate status for HR Approval and Director Approval Statuses
-  const hrStatus = approvalTier === "Tier 2" ? "Pending" : "N/A";
+  const hrStatus =
+    approvalTier === "Tier 2" || approvalTier === "Tier 3" ? "Pending" : "N/A";
   const directorStatus = approvalTier === "Tier 3" ? "Pending" : "N/A";
 
   // 2. Update the sheet with the initial values
