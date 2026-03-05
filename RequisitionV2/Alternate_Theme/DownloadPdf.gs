@@ -204,17 +204,29 @@ function doGet(e) {
                 ${row("Email", hodEmail, true)}
                 ${commentRow("Comments", hodComments)}
 
-                ${groupHeader("Human Resources")}
-                ${statusRow("Status", hrApprovalStatus, true)}
-                ${row("Approver", hrApprover)}
-                ${row("Email", hrEmail, true)}
-                ${commentRow("Comments", hrComments)}
+                ${
+                  approvalTier === "Tier 2" || approvalTier === "Tier 3"
+                    ? `
+                  ${groupHeader("Human Resources")}
+                  ${statusRow("Status", hrApprovalStatus, true)}
+                  ${row("Approver", hrApprover)}
+                  ${row("Email", hrEmail, true)}
+                  ${commentRow("Comments", hrComments)}
+                  `
+                    : ""
+                }
 
-                ${groupHeader("Executive Director")}
-                ${statusRow("Status", directorApprovalStatus, true)}
-                ${row("Approver", directorApprover)}
-                ${row("Email", directorEmail, true)}
-                ${commentRow("Comments", directorComments, true)}
+                ${
+                  approvalTier == "Tier 3"
+                    ? `
+                  ${groupHeader("Executive Director")}
+                  ${statusRow("Status", directorApprovalStatus, true)}
+                  ${row("Approver", directorApprover)}
+                  ${row("Email", directorEmail, true)}
+                  ${commentRow("Comments", directorComments, true)}
+                  `
+                    : ""
+                }
               </tbody>
             </table>
 

@@ -101,17 +101,31 @@ function EmailTemplate({
               ${approvalRow("Email", hodEmail, true, null, false, false, true)}
               ${approvalRow("Comments", hodComments || "None", false, null, true)}
               
-              ${approvalGroupHeader("Human Resources")}
-              ${approvalRow("Status", hrApprovalStatus, true, hrApprovalStatus)}
-              ${approvalRow("Approver", hrApprover, false)}
-              ${approvalRow("Email", hrEmail, true, null, false, false, true)}
-              ${approvalRow("Comments", hrComments || "None", false, null, true)}
-              
-              ${approvalGroupHeader("Executive Director")}
-              ${approvalRow("Status", directorApprovalStatus, true, directorApprovalStatus)}
-              ${approvalRow("Approver", directorApprover, false)}
-              ${approvalRow("Email", directorEmail, true, null, false, false, true)}
-              ${approvalRow("Comments", directorComments || "None", false, null, true, true)}
+              ${
+                /* Show HR section for Tier 2 and Tier 3 */
+                approvalTier === "Tier 2" || approvalTier === "Tier 3"
+                  ? `
+                ${approvalGroupHeader("Human Resources")}
+                ${approvalRow("Status", hrApprovalStatus, true, hrApprovalStatus)}
+                ${approvalRow("Approver", hrApprover, false)}
+                ${approvalRow("Email", hrEmail, true, null, false, false, true)}
+                ${approvalRow("Comments", hrComments || "None", false, null, true)}
+              `
+                  : ""
+              }
+
+              ${
+                /* Show Director section ONLY for Tier 3 */
+                approvalTier === "Tier 3"
+                  ? `
+                  ${approvalGroupHeader("Executive Director")}
+                  ${approvalRow("Status", directorApprovalStatus, true, directorApprovalStatus)}
+                  ${approvalRow("Approver", directorApprover, false)}
+                  ${approvalRow("Email", directorEmail, true, null, false, false, true)}
+                  ${approvalRow("Comments", directorComments || "None", false, null, true, true)}
+                `
+                  : ""
+              }
             </tbody>
           </table>
 
