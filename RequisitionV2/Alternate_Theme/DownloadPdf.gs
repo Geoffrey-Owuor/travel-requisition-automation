@@ -217,7 +217,7 @@ function doGet(e) {
                 }
 
                 ${
-                  approvalTier == "Tier 3"
+                  approvalTier === "Tier 3"
                     ? `
                   ${groupHeader("Executive Director")}
                   ${statusRow("Status", directorApprovalStatus, true)}
