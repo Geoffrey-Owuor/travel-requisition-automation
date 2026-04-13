@@ -89,10 +89,11 @@ function EmailTemplate({
               ${modernRow("Designation", designation)}
               ${modernRow("Destination", destination)}
               ${modernRow("Travel Category", travelCategory)}
-              ${modernRow("Travel Dates", `${formattedDepartureDate} — ${formattedReturnDate}`)}
+              ${modernRow("Travel Dates", `${formattedDepartureDate} - ${formattedReturnDate}`)}
               ${modernRow("Transport Mode", modeOfTransport)}
               ${modernRow("Business Justification", businessJustification)}
               ${modernRow("Cost Centre", costCentre)}
+              ${modernRow("Approval Tier", approvalTier)}
               ${modernRow("Within Budget", withinBudget)}
              
             </table>
