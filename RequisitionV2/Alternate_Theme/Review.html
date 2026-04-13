@@ -133,13 +133,7 @@
         border-right: none;
       }
 
-      .detail-item:nth-last-child(-n + 2):not(.detail-item--full) {
-        border-bottom: none;
-      }
-
-      .detail-item--full {
-        grid-column: span 2;
-        border-right: none;
+      .detail-item:nth-last-child(-n + 2) {
         border-bottom: none;
       }
 
@@ -452,6 +446,18 @@
             <div class="value"><?= details.requestedModeofTravel ?></div>
           </div>
           <div class="detail-item">
+            <div class="label">Two-way Transport Cost</div>
+            <div class="value"><?= details.twoWayTransportCost ?></div>
+          </div>
+          <div class="detail-item">
+            <div class="label">Accomodation Cost</div>
+            <div class="value"><?= details.accomodationCost ?></div>
+          </div>
+          <div class="detail-item">
+            <div class="label">Other Costs</div>
+            <div class="value"><?= details.otherCosts ?></div>
+          </div>
+          <div class="detail-item">
             <div class="label">Per Diem Policy</div>
             <div class="value"><?= details.perdiemPolicy ?></div>
           </div>
@@ -460,7 +466,7 @@
             <div class="value"><?= details.approvalTier ?></div>
           </div>
           <div class="detail-item">
-            <div class="label">Estimated Cost</div>
+            <div class="label">Total Estimated Cost</div>
             <div class="value" style="font-weight: 700; color: var(--success)">
               KES <?= details.estimatedCost ?>
             </div>
@@ -469,7 +475,7 @@
             <div class="label">Cost Centre</div>
             <div class="value"><?= details.costCentre ?></div>
           </div>
-          <div class="detail-item detail-item--full">
+          <div class="detail-item">
             <div class="label">Within Budget?</div>
             <div class="value" style="margin-top: 6px">
               <? if (details.withinBudget === 'Yes') { ?>
@@ -517,7 +523,7 @@
           © <?= new Date().getFullYear() ?> Your Company Ltd. All rights
           reserved.
         </p>
-        <p>Travel Requisition System</p>
+        <p>Travel Requisition</p>
       </div>
     </div>
 

@@ -78,17 +78,33 @@ function onFormSubmit(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   const rowId = sheet.getLastRow();
 
+  // Get the sheet headers
+  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+
   // Getting the hod name from the submitted form
   const selectedHod = e.namedValues["HOD Approver"][0];
 
-  // Get the values that will determine the approval tier
-  const estimatedCost = e.namedValues["Total Estimated Cost"][0];
   const modeOfTravel = e.namedValues["Requested Mode of Travel"][0];
   const travelCategory = e.namedValues["Travel Category"][0];
 
+  const twoWayTransport = Number(e.namedValues["Two-way Transport Cost"][0]);
+  const accomodation = Number(e.namedValues["Accomodation Cost"][0]);
+  const otherCosts = Number(e.namedValues["Other Costs/Miscellaneous"][0]);
+  const perDiemPolicy = Number(e.namedValues["Per Diem Policy Entitlement"][0]);
+
+  // Total Estimated Column
+  const totalEstimatedCostCol = headers.indexOf("Total Estimated Cost") + 1;
+
+  // The total estimated cost value
+  const totalEstimatedCost =
+    twoWayTransport + accomodation + otherCosts + perDiemPolicy;
+
+  // Set the total cost value
+  sheet.getRange(rowId, totalEstimatedCostCol).setValue(totalEstimatedCost);
+
   // get the approval tier value
   const approvalTier = generateApprovalTier(
-    estimatedCost,
+    totalEstimatedCost,
     modeOfTravel,
     travelCategory,
   );
@@ -101,9 +117,6 @@ function onFormSubmit(e) {
   // get the hod uuid and email - or fall back to an invalid string
   const hodUuid = hodObject ? hodObject.uuid : "invalid_uuid";
   const hodEmail = hodObject ? hodObject.email : "invalid_email";
-
-  // Get the sheet headers
-  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
 
   // get the user's email
   const userEmailCol = headers.indexOf("Email Address") + 1;

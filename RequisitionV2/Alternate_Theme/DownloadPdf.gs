@@ -24,6 +24,9 @@ function doGet(e) {
     travelCategory,
     businessJustification,
     modeOfTransport,
+    twoWayTransportCost,
+    accomodationCost,
+    otherCosts,
     perDiemPolicy,
     estimatedCost,
     costCentre,
@@ -51,192 +54,154 @@ function doGet(e) {
     <html>
       <head>
         <meta charset="UTF-8">
-        <title>Travel Requisition — ${employeeName}</title>
+        <title>Travel Summary — ${employeeName}</title>
         <style>
+          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+          
           * { box-sizing: border-box; margin: 0; padding: 0; }
           body { 
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-            background-color: #f7f3f3; /* Mist Rose */
-            padding: 40px 20px; 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            background-color: #fcfafb; 
+            color: #1a0f0f;
+            line-height: 1.5;
+            padding: 40px 0;
           }
 
-          .wrapper { max-width: 680px; margin: 0 auto; }
+          .wrapper { max-width: 700px; margin: 0 auto; background: white; border-radius: 24px; box-shadow: 0 10px 40px rgba(163,29,29,0.08); overflow: hidden; border: 1px solid #f2eaea; }
 
-          /* Header - Deep Crimson Theme */
+          /* Compact Glossy Header */
           .header {
             background: linear-gradient(135deg, #a31d1d 0%, #7a1515 100%);
-            border-radius: 20px 20px 0 0;
-            padding: 40px 36px 32px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            padding: 24px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid #f2d7d5;
           }
-          .header .bubble1 { position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,0.05); }
-          .header .bubble2 { position: absolute; bottom: -20px; left: -20px; width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.03); }
-          .header .brand { font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: #f2d7d5; margin-bottom: 8px; }
-          .header h1 { font-family: Georgia, serif; font-size: 24px; font-weight: 400; color: #ffffff; }
-          .header .divider { margin: 18px auto 0; width: 40px; height: 2px; background: #ffffff; opacity: 0.3; border-radius: 2px; }
+          .header h1 { color: white; font-size: 20px; font-weight: 700; margin: 0; }
+          .header .id-badge { background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 11px; font-weight: 700; }
 
-          /* Body */
-          .body { 
-            background: #ffffff; 
-            padding: 36px; 
-            border-left: 1px solid #f2d7d5; 
-            border-right: 1px solid #f2d7d5; 
+          .content { padding: 32px 40px; }
+
+          /* Section Titles */
+          .section-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: #a31d1d; margin-bottom: 16px; border-bottom: 1px solid #f9e8e8; padding-bottom: 8px; }
+
+          /* Info Grid */
+          .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 32px; }
+          .info-item label { display: block; font-size: 10px; font-weight: 700; color: #8c7474; text-transform: uppercase; margin-bottom: 4px; }
+          .info-item span { font-size: 14px; font-weight: 600; color: #1a0f0f; }
+
+          /* Glossy Financial Card */
+          .financial-card {
+            background: linear-gradient(145deg, #2c1a1a 0%, #1a0f0f 100%);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border: 1px solid rgba(163,29,29,0.3);
+            color: white;
           }
+          .financial-card table { width: 100%; border-collapse: collapse; }
+          .financial-card td { padding: 8px 0; font-size: 13px; color: #8c7474; }
+          .financial-card td.val { text-align: right; color: white; font-weight: 600; }
+          .total-row { border-top: 1px solid rgba(255,255,255,0.1); }
+          .total-row td { padding-top: 16px; font-size: 15px; font-weight: 700; color: #f2d7d5; }
+          .total-row td.val { font-size: 22px; color: white; }
 
-          /* Section label */
-          .section-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #a31d1d; margin: 0 0 12px; }
+          /* Approval Cards */
+          .approval-stack { border: 1px solid #f2eaea; border-radius: 16px; overflow: hidden; margin-bottom: 32px; }
+          .approval-item { padding: 16px 20px; border-bottom: 1px solid #f2eaea; background: white; }
+          .approval-item:last-child { border-bottom: none; }
+          .app-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+          .app-role { font-size: 10px; font-weight: 800; color: #8c7474; text-transform: uppercase; }
+          .app-name { font-size: 14px; font-weight: 700; color: #1a0f0f; }
+          .badge { padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+          .badge.approved { background: #d4edda; color: #155724; }
+          .badge.declined { background: #f8d7da; color: #721c24; }
+          .badge.pending { background: #fff3cd; color: #856404; }
+          .comment-box { margin-top: 10px; font-size: 12px; font-style: italic; color: #6e5a5a; padding: 10px; background: #fdfafa; border-radius: 8px; border: 1px dashed #f2eaea; }
 
-          /* Tables */
-          table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 16px rgba(163,29,29,0.05); margin-bottom: 32px; }
-          td { padding: 13px 18px; border-bottom: 1px solid #f9f0f0; font-size: 13px; color: #453535; }
-          td.label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #8c7474; width: 38%; }
-          td.alt { background-color: #fffafa; }
-          td.no-border { border-bottom: none; }
+          /* Justification Section */
+          .justification { background: #fdf6f6; padding: 20px; border-radius: 16px; border: 1px solid #f9e8e8; margin-bottom: 32px; }
+          .justification h4 { font-size: 11px; text-transform: uppercase; color: #a31d1d; margin-bottom: 8px; }
+          .justification p { font-size: 13px; color: #4a3a3a; }
 
-          /* Badge Logic */
-          .badge { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
-          .badge.pending { color: #856404; background: #fff3cd; border: 1px solid rgba(133,100,4,0.2); }
-          .badge.approved { color: #155724; background: #d4edda; border: 1px solid rgba(21,87,36,0.2); }
-          .badge.declined { color: #721c24; background: #f8d7da; border: 1px solid rgba(114,28,36,0.2); }
+          .footer { background: #fdfafa; padding: 24px; text-align: center; border-top: 1px solid #f2eaea; }
+          .footer p { font-size: 10px; color: #8c7474; letter-spacing: 0.5px; }
 
-          /* Comment */
-          .comment { font-family: Georgia, serif; font-size: 13px; font-style: italic; color: #6e5a5a; }
+          /* Print Controls */
+          .controls { max-width: 700px; margin: 0 auto 20px; text-align: right; }
+          .btn-print { background: #a31d1d; color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 12px; text-transform: uppercase; }
 
-          /* Group header */
-          .group-header td { 
-            padding: 10px 18px; 
-            font-size: 10px; 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            color: #ffffff; 
-            background: #453535; /* Dark Warm Neutral */
-            border-bottom: none; 
-          }
-
-          /* Cost */
-          .cost { font-size: 16px; font-weight: 700; color: #a31d1d; }
-
-          /* Download button */
-          .btn-wrap { display: flex; justify-content: flex-end; margin-bottom: 28px; }
-          .btn { 
-            display: inline-block; 
-            background: #a31d1d; 
-            color: #ffffff; 
-            padding: 14px 32px; 
-            text-decoration: none; 
-            border-radius: 8px; 
-            font-weight: 700; 
-            font-size: 11px; 
-            letter-spacing: 1.5px; 
-            text-transform: uppercase; 
-            box-shadow: 0 4px 12px rgba(163,29,29,0.2); 
-            cursor: pointer; 
-            border: none;
-            transition: all 0.2s ease;
-          }
-          .btn:hover { background: #7a1515; transform: translateY(-1px); }
-
-          /* Footer */
-          .footer { background: #2c1a1a; border-radius: 0 0 20px 20px; padding: 24px 36px; text-align: center; }
-          .footer p { font-size: 10px; color: #8c7474; margin-bottom: 4px; letter-spacing: 0.5px; }
-          .footer .copy { color: #f2d7d5; font-weight: 600; letter-spacing: 1px; margin: 0; }
-
-          /* Print/PDF styles */
           @media print {
-            body { background: white; padding: 0; }
-            .btn-wrap { display: none; }
-            .wrapper { max-width: 100%; }
+            body { padding: 0; background: white; }
+            .wrapper { box-shadow: none; border: none; max-width: 100%; border-radius: 0; }
+            .controls { display: none; }
             .header { border-radius: 0; -webkit-print-color-adjust: exact; }
-            .footer { border-radius: 0; -webkit-print-color-adjust: exact; }
-            .group-header td { -webkit-print-color-adjust: exact; }
+            .financial-card { -webkit-print-color-adjust: exact; }
           }
         </style>
       </head>
       <body>
+        <div class="controls">
+          <button class="btn-print" onclick="window.print()">Print to PDF / Save</button>
+        </div>
+
         <div class="wrapper">
-
-          <div class="btn-wrap">
-            <button class="btn" onclick="window.print()">Download Report PDF</button>
-          </div>
-
           <div class="header">
-            <div class="bubble1"></div>
-            <div class="bubble2"></div>
-            <p class="brand">Your Company Ltd.</p>
-            <h1>Travel Requisition Summary</h1>
-            <div class="divider"></div>
+            <div>
+              <p style="color: #f2d7d5; font-size: 9px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px;">Your Company Ltd.</p>
+              <h1>Travel Requisition Report</h1>
+            </div>
+            <div class="id-badge">REQ #${rowId}</div>
           </div>
 
-          <div class="body">
+          <div class="content">
+            <h3 class="section-title">Employee & Journey Details</h3>
+            <div class="info-grid">
+              <div class="info-item"><label>Full Name</label><span>${employeeName}</span></div>
+              <div class="info-item"><label>Email</label><span>${emailAddress}</span></div>
+              <div class="info-item"><label>Designation</label><span>${designation}</span></div>
+              <div class="info-item"><label>Department</label><span>${department}</span></div>
+              <div class="info-item"><label>Cost Centre</label><span>${costCentre}</span></div>
+              <div class="info-item"><label>Destination</label><span>${destination}</span></div>
+              <div class="info-item"><label>Category</label><span>${travelCategory}</span></div>
+              <div class="info-item"><label>Dates</label><span>${formattedDepartureDate} to ${formattedReturnDate}</span></div>
+              <div class="info-item"><label>Transport Mode</label><span>${modeOfTransport}</span></div>
+            </div>
 
-            <p class="section-label">Travel Details</p>
-            <table>
-              <tbody>
-                ${row("Employee", employeeName, true)}
-                ${row("Submitter Email", emailAddress)}
-                ${row("Department", department, true)}
-                ${row("Designation", designation)}
-                ${row("Destination", destination, true)}
-                ${row("Travel Category", travelCategory)}
-                ${row("Business Justification", businessJustification, true)}
-                ${row("Mode of Transport", modeOfTransport)}
-                ${row("Per Diem Policy", perDiemPolicy, true)}
-                ${row("Approval Tier", approvalTier)}
-                ${row("Cost Centre", costCentre, true)}
-                ${row("Within Budget", withinBudget)}
-                ${row("Travel Dates", formattedDepartureDate + " → " + formattedReturnDate, true)}
-                <tr>
-                  <td class="label alt no-border">Estimated Cost</td>
-                  <td class="alt no-border cost">KES ${estimatedCost}</td>
+            <div class="justification">
+              <h4>Business Justification</h4>
+              <p>${businessJustification || "No justification provided."}</p>
+            </div>
+
+            <h3 class="section-title">Financial Breakdown</h3>
+            <div class="financial-card">
+              <table>
+                <tr><td>Two-Way Transport Cost</td><td class="val">KES ${twoWayTransportCost}</td></tr>
+                <tr><td>Accommodation Cost</td><td class="val">KES ${accomodationCost}</td></tr>
+                <tr><td>Other / Miscellaneous Costs</td><td class="val">KES ${otherCosts}</td></tr>
+                <tr><td>Per Diem Policy</td><td class="val">KES ${perDiemPolicy}</td></tr>
+                <tr class="total-row">
+                  <td>Total Estimated Cost</td>
+                  <td class="val">KES ${estimatedCost}</td>
                 </tr>
-              </tbody>
-            </table>
+              </table>
+              <p style="font-size: 10px; color: #8c7474; margin-top: 15px; text-align: center;">Within Budget: <strong>${withinBudget}</strong> | Tier: <strong>${approvalTier}</strong></p>
+            </div>
 
-            <p class="section-label">Approval Progress</p>
-            <table>
-              <tbody>
-                ${groupHeader("Head of Department")}
-                ${statusRow("Status", hodApprovalStatus, true)}
-                ${row("Approver", hodApprover)}
-                ${row("Email", hodEmail, true)}
-                ${commentRow("Comments", hodComments)}
-
-                ${
-                  approvalTier === "Tier 2" || approvalTier === "Tier 3"
-                    ? `
-                  ${groupHeader("Human Resources")}
-                  ${statusRow("Status", hrApprovalStatus, true)}
-                  ${row("Approver", hrApprover)}
-                  ${row("Email", hrEmail, true)}
-                  ${commentRow("Comments", hrComments)}
-                  `
-                    : ""
-                }
-
-                ${
-                  approvalTier === "Tier 3"
-                    ? `
-                  ${groupHeader("Executive Director")}
-                  ${statusRow("Status", directorApprovalStatus, true)}
-                  ${row("Approver", directorApprover)}
-                  ${row("Email", directorEmail, true)}
-                  ${commentRow("Comments", directorComments, true)}
-                  `
-                    : ""
-                }
-              </tbody>
-            </table>
-
+            <h3 class="section-title">Workflow & Approval Log</h3>
+            <div class="approval-stack">
+              ${approvalItem("Head of Department", hodApprover, hodEmail, hodApprovalStatus, hodComments)}
+              ${approvalTier === "Tier 2" || approvalTier === "Tier 3" ? approvalItem("Human Resources", hrApprover, hrEmail, hrApprovalStatus, hrComments) : ""}
+              ${approvalTier === "Tier 3" ? approvalItem("Executive Director", directorApprover, directorEmail, directorApprovalStatus, directorComments) : ""}
+            </div>
           </div>
 
           <div class="footer">
-            <p>This is a system-generated summary of Travel Requisition #${rowId}.</p>
-            <p class="copy">&copy; ${new Date().getFullYear()} Your Company Ltd. All rights reserved.</p>
+            <p>Generated on ${new Date().toLocaleDateString("en-GB")} | Travel Requisition</p>
+            <p style="margin-top: 5px; font-weight: 700;">&copy; Your Company Ltd.</p>
           </div>
-
         </div>
       </body>
     </html>
@@ -244,54 +209,39 @@ function doGet(e) {
 
   return HtmlService.createHtmlOutput(html)
     .setTitle(`Summary - ${employeeName}`)
+    .setFaviconUrl(faviconUrl)
     .addMetaTag("viewport", "width=device-width, initial-scale=1")
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
-
-function row(label, value, isAlt = false) {
-  const alt = isAlt ? " alt" : "";
-  return `
-    <tr>
-      <td class="label${alt}">${label}</td>
-      <td class="val${alt}">${value || "N/A"}</td>
-    </tr>`;
-}
-
-function statusRow(label, value, isAlt = false) {
-  const alt = isAlt ? " alt" : "";
-  const lower = (value || "").toLowerCase();
+/** * HELPER: Card-based Approval Item
+ */
+function approvalItem(role, name, email, status, comments) {
+  const lower = (status || "Pending").toLowerCase();
   let badgeClass = "pending";
   if (lower.includes("approved")) badgeClass = "approved";
   if (lower.includes("declined")) badgeClass = "declined";
+
   return `
-    <tr>
-      <td class="label${alt}">${label}</td>
-      <td class="val${alt}"><span class="badge ${badgeClass}">${value || "Pending"}</span></td>
-    </tr>`;
+    <div class="approval-item">
+      <div class="app-header">
+        <div>
+          <div class="app-role">${role}</div>
+          <div class="app-name">${name || "Awaiting Action..."}</div>
+          <div class="app-name">${email || "Awaiting Action..."}</div>
+        </div>
+        <div class="badge ${badgeClass}">${status || "Pending"}</div>
+      </div>
+      ${comments ? `<div class="comment-box">"${comments}"</div>` : ""}
+    </div>
+  `;
 }
 
-function commentRow(label, value, isLast = false) {
-  const last = isLast ? " no-border" : "";
-  return `
-    <tr>
-      <td class="label${last}">${label}</td>
-      <td class="${last}"><span class="comment">"${value || "None"}"</span></td>
-    </tr>`;
-}
-
-function groupHeader(label) {
-  return `
-    <tr class="group-header">
-      <td colspan="2">${label}</td>
-    </tr>`;
-}
-
+/** * HELPER: Date Formatter
+ */
 function dateFormatter(date) {
-  if (!date) return "N/A";
-  const d = new Date(date);
-  return d.toLocaleDateString("en-GB", {
+  if (!date || isNaN(new Date(date).getTime())) return "N/A";
+  return new Date(date).toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "short",
     year: "numeric",
