@@ -92,13 +92,12 @@ function doGet(e) {
     businessJustification: values[8],
     requestedModeofTravel: values[9],
     twoWayTransportCost: values[10],
-    accomodationCost: values[11],
-    otherCosts: values[12],
-    perdiemPolicy: values[13],
-    estimatedCost: values[14],
-    costCentre: values[15],
-    withinBudget: values[16],
-    approvalTier: values[17],
+    otherCosts: values[11],
+    perdiemPolicy: values[12],
+    estimatedCost: values[13],
+    costCentre: values[14],
+    withinBudget: values[15],
+    approvalTier: values[16],
   };
 
   return html

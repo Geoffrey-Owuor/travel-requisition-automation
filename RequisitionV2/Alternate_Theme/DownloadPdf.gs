@@ -25,7 +25,6 @@ function doGet(e) {
     businessJustification,
     modeOfTransport,
     twoWayTransportCost,
-    accomodationCost,
     otherCosts,
     perDiemPolicy,
     estimatedCost,
@@ -179,9 +178,8 @@ function doGet(e) {
             <div class="financial-card">
               <table>
                 <tr><td>Two-Way Transport Cost</td><td class="val">KES ${twoWayTransportCost}</td></tr>
-                <tr><td>Accommodation Cost</td><td class="val">KES ${accomodationCost}</td></tr>
                 <tr><td>Other / Miscellaneous Costs</td><td class="val">KES ${otherCosts}</td></tr>
-                <tr><td>Per Diem Policy</td><td class="val">KES ${perDiemPolicy}</td></tr>
+                <tr><td>Per Diem Entitlement</td><td class="val">KES ${perDiemPolicy}</td></tr>
                 <tr class="total-row">
                   <td>Total Estimated Cost</td>
                   <td class="val">KES ${estimatedCost}</td>

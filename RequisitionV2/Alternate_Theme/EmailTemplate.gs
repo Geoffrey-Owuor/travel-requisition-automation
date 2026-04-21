@@ -24,7 +24,6 @@ function EmailTemplate({
     businessJustification,
     modeOfTransport,
     twoWayTransportCost,
-    accomodationCost,
     otherCosts,
     perDiemPolicy,
     estimatedCost,
@@ -107,15 +106,11 @@ function EmailTemplate({
                 <td style="padding-bottom: 12px; font-size: 12px; color: #ffffff; text-align: right; font-weight: 600;">KES ${twoWayTransportCost}</td>
               </tr>
               <tr>
-                <td style="padding-bottom: 12px; font-size: 12px; color: #8c7474;">Accommodation</td>
-                <td style="padding-bottom: 12px; font-size: 12px; color: #ffffff; text-align: right; font-weight: 600;">KES ${accomodationCost}</td>
-              </tr>
-              <tr>
                 <td style="padding-bottom: 12px; font-size: 12px; color: #8c7474;">Other Costs</td>
                 <td style="padding-bottom: 12px; font-size: 12px; color: #ffffff; text-align: right; font-weight: 600;">KES ${otherCosts}</td>
               </tr>
               <tr>
-                <td style="padding-bottom: 12px; font-size: 12px; color: #8c7474;">Per Diem Policy</td>
+                <td style="padding-bottom: 12px; font-size: 12px; color: #8c7474;">Per Diem Entitlement</td>
                 <td style="padding-bottom: 12px; font-size: 12px; color: #ffffff; text-align: right; font-weight: 600;">KES ${perDiemPolicy}</td>
               </tr>
               <tr>

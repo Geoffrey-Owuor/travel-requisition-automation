@@ -27,13 +27,13 @@ const HOD_APPROVERS = [
     uuid: "00000000-0000-4000-8000-000000000003",
   },
   {
-    name: "Director Name 2",
-    email: "director2@example.com",
+    name: "Random Email",
+    email: "approver4@example.com",
     uuid: "00000000-0000-4000-8000-000000000004",
   },
   {
-    name: "Director Name 3",
-    email: "director3@example.com",
+    name: "Random Email2",
+    email: "approver5@example.com",
     uuid: "00000000-0000-4000-8000-000000000005",
   },
 ];
@@ -88,16 +88,14 @@ function onFormSubmit(e) {
   const travelCategory = e.namedValues["Travel Category"][0];
 
   const twoWayTransport = Number(e.namedValues["Two-way Transport Cost"][0]);
-  const accomodation = Number(e.namedValues["Accomodation Cost"][0]);
   const otherCosts = Number(e.namedValues["Other Costs/Miscellaneous"][0]);
-  const perDiemPolicy = Number(e.namedValues["Per Diem Policy Entitlement"][0]);
+  const perDiemPolicy = Number(e.namedValues["Total Per Diem Entitlement"][0]);
 
   // Total Estimated Column
   const totalEstimatedCostCol = headers.indexOf("Total Estimated Cost") + 1;
 
   // The total estimated cost value
-  const totalEstimatedCost =
-    twoWayTransport + accomodation + otherCosts + perDiemPolicy;
+  const totalEstimatedCost = twoWayTransport + otherCosts + perDiemPolicy;
 
   // Set the total cost value
   sheet.getRange(rowId, totalEstimatedCostCol).setValue(totalEstimatedCost);
