@@ -1,7 +1,8 @@
 function EmailTemplate(rowId, message, title, stage, role) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
 
-  const webAppUrl = `https://script.google.com/macros/s/YOUR_V1_DEPLOYMENT_ID/exec?authuser=${0}`;
+  const webAppUrl = getWebAppLink_("WEB_APP_URL");
+  const companyName = getConfig("COMPANY_NAME");
 
   const reviewLink = `${webAppUrl}&rowId=${rowId}&stage=${stage}`;
 
@@ -94,7 +95,7 @@ function EmailTemplate(rowId, message, title, stage, role) {
 
       <div style="background-color: #f9f9f9; color: #888; padding: 25px; text-align: center; font-size: 11px;">
         <p style="margin: 0 0 5px 0;">This is an automated email.</p>
-        <p style="margin: 0; font-weight: 600;">&copy; ${new Date().getFullYear()} Your Company Ltd. All rights reserved.</p>
+        <p style="margin: 0; font-weight: 600;">&copy; ${new Date().getFullYear()} ${companyName}. All rights reserved.</p>
       </div>
     </div>
   `;

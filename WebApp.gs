@@ -39,6 +39,8 @@ function doGet(e) {
   const html = HtmlService.createTemplateFromFile("Review");
 
   // Pass variables to the HTML
+  const companyName = getConfig("COMPANY_NAME");
+  html.companyName = companyName;
   html.rowId = rowId;
   html.stage = stage;
   html.details = {
@@ -52,7 +54,7 @@ function doGet(e) {
 
   return html
     .evaluate()
-    .setTitle("Review Portal | Your Company Ltd")
+    .setTitle(`Review Portal | ${companyName}`)
     .addMetaTag("viewport", "width=device-width, initial-scale=1")
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }

@@ -125,9 +125,9 @@ function hrApprovalStage({
     } else {
       // The requisition requires the next approval - Director Approval
       // Send emails to the required directors
-      DIRECTOR_APPROVERS.forEach((directorApprover) => {
+      getApprovers_("Director").forEach((directorApprover) => {
         //  Generate a reviewLink
-        const reviewLink = `${webAppUrl}&rowId=${rowId}&token=${directorApprover.uuid}&stage=Director`;
+        const reviewLink = `${getWebAppLink_("WEB_APP_URL")}&rowId=${rowId}&token=${directorApprover.uuid}&stage=Director`;
 
         // Generate a Director email html
         const directorHtmlBody = EmailTemplate({

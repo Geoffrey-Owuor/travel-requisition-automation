@@ -1,42 +1,11 @@
-// Defining our base link
-const webAppUrl = `https://script.google.com/macros/s/YOUR_V2_DEPLOYMENT_ID/exec?authuser=${0}`;
+// The web app URL and the approver lists (name, email, uuid token) come from
+// Script Properties: WEB_APP_URL, HOD_APPROVERS, HR_APPROVERS, DIRECTOR_APPROVERS.
+// See Config.gs and config.example.json.
 
-// DIRECTORS ARRAY
-const DIRECTOR_APPROVERS = [
-  {
-    name: "Approver Name 1",
-    email: "approver1@example.com",
-    uuid: "00000000-0000-4000-8000-000000000001",
-  },
-];
-
-// HR ARRAY
-const HR_APPROVERS = [
-  {
-    name: "Approver Name 3",
-    email: "approver3@example.com",
-    uuid: "00000000-0000-4000-8000-000000000002",
-  },
-];
-
-// HOD ARRAY
-const HOD_APPROVERS = [
-  {
-    name: "Approver Name 2",
-    email: "approver2@example.com",
-    uuid: "00000000-0000-4000-8000-000000000003",
-  },
-  {
-    name: "Random Email",
-    email: "approver4@example.com",
-    uuid: "00000000-0000-4000-8000-000000000004",
-  },
-  {
-    name: "Random Email2",
-    email: "approver5@example.com",
-    uuid: "00000000-0000-4000-8000-000000000005",
-  },
-];
+// stage: "HOD" | "HR" | "Director"
+function getApprovers_(stage) {
+  return getConfig(`${stage.toUpperCase()}_APPROVERS`, { json: true });
+}
 
 // Date Formatter
 function dateFormatter(dateString) {
@@ -108,7 +77,7 @@ function onFormSubmit(e) {
   );
 
   // Get the hod object from the HOD's array
-  const hodObject = HOD_APPROVERS.find(
+  const hodObject = getApprovers_("HOD").find(
     (hodApprover) => hodApprover.name === selectedHod,
   );
 
@@ -142,7 +111,7 @@ function onFormSubmit(e) {
   sheet.getRange(rowId, directorStatusCol).setValue(directorStatus);
 
   // Generate the HOD approval url
-  const reviewLink = `${webAppUrl}&rowId=${rowId}&token=${hodUuid}&stage=HOD`;
+  const reviewLink = `${getWebAppLink_("WEB_APP_URL")}&rowId=${rowId}&token=${hodUuid}&stage=HOD`;
 
   // Generating the user email html template
   const userHtmlBody = EmailTemplate({
@@ -199,9 +168,9 @@ function onFormSubmit(e) {
       });
     } else {
       // Send email to HR Approvers (A more higher approval tier)
-      HR_APPROVERS.forEach((hrApprover) => {
+      getApprovers_("HR").forEach((hrApprover) => {
         //  Generate a reviewLink
-        const reviewLink = `${webAppUrl}&rowId=${rowId}&token=${hrApprover.uuid}&stage=HR`;
+        const reviewLink = `${getWebAppLink_("WEB_APP_URL")}&rowId=${rowId}&token=${hrApprover.uuid}&stage=HR`;
 
         // Generate an HR email html
         const hrHtmlBody = EmailTemplate({

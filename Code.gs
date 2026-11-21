@@ -1,16 +1,5 @@
-// DIRECTORS MAPPING
-const DIRECTOR_MAP = {
-  "Director Name 1": "director1@example.com",
-  "Director Name 2": "director2@example.com",
-  "Director Name 3": "director3@example.com",
-};
-
-// HR MAPPING
-const HR_MAP = {
-  "Approver Name 1": "approver1@example.com",
-  "Approver Name 2": "approver2@example.com",
-  "Approver Name 3": "approver3@example.com",
-};
+// Approver maps (name -> email) come from the DIRECTOR_MAP and HR_MAP
+// Script Properties. See Config.gs and config.example.json.
 
 // Date Formatter
 function dateFormatter(dateString) {
@@ -36,8 +25,8 @@ function onFormSubmit(e) {
   // Other form values selected to be put later
 
   // Get the director email and hr email
-  const directorEmail = DIRECTOR_MAP[selectedDirector];
-  const hrEmail = HR_MAP[selectedHr];
+  const directorEmail = getConfig("DIRECTOR_MAP", { json: true })[selectedDirector];
+  const hrEmail = getConfig("HR_MAP", { json: true })[selectedHr];
 
   // Get the sheet headers
   const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];

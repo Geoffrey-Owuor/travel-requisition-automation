@@ -1,5 +1,3 @@
-const PDF_WEB_APP_URL = `https://script.google.com/macros/s/YOUR_PDF_DEPLOYMENT_ID/exec?authuser=${0}`;
-
 function EmailTemplate({
   rowId,
   message,
@@ -9,6 +7,8 @@ function EmailTemplate({
   showPdfDownload = false,
 }) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const companyName = getConfig("COMPANY_NAME");
+  const pdfWebAppUrl = getWebAppLink_("PDF_WEB_APP_URL");
   const lastCol = sheet.getLastColumn();
   const values = sheet.getRange(rowId, 2, 1, lastCol - 1).getValues()[0];
 
@@ -138,14 +138,14 @@ function EmailTemplate({
               <a href="${reviewLink}" style="background: #a31d1d; color: #ffffff; padding: 14px 36px; text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 13px; display: inline-block; box-shadow: 0 4px 15px rgba(163,29,29,0.3);">Review Requisition</a>
             </div>
             <div style="${pdfButtonStyle} width: 100%;">
-              <a href="${PDF_WEB_APP_URL}&rowId=${rowId}" style="color: #a31d1d; font-size: 12px; font-weight: 600; text-decoration: underline; display: inline-block; margin-top: 12px;">Download PDF Summary</a>
+              <a href="${pdfWebAppUrl}&rowId=${rowId}" style="color: #a31d1d; font-size: 12px; font-weight: 600; text-decoration: underline; display: inline-block; margin-top: 12px;">Download PDF Summary</a>
             </div>
           </div>
 
         </div>
 
         <div style="background: #fdfafa; padding: 20px; text-align: center; border-top: 1px solid #f2eaea;">
-          <p style="margin: 0; font-size: 10px; color: #8c7474; letter-spacing: 1px;">&copy; ${new Date().getFullYear()} Your Company Ltd. | Travel Requisition</p>
+          <p style="margin: 0; font-size: 10px; color: #8c7474; letter-spacing: 1px;">&copy; ${new Date().getFullYear()} ${companyName}. | Travel Requisition</p>
         </div>
       </div>
     </div>

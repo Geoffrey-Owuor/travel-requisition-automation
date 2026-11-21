@@ -1,13 +1,10 @@
-const SPREADSHEET_ID = "YOUR_GOOGLE_SHEET_ID";
 const SHEET_NAME = "Form Responses 1";
-const faviconUrl =
-  "https://lh3.googleusercontent.com/u/0/d/YOUR_FAVICON_FILE_ID#.png";
 
 function doGet(e) {
   const rowId = e.parameter.rowId;
 
   const sheet =
-    SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
+    SpreadsheetApp.openById(getConfig("SPREADSHEET_ID")).getSheetByName(SHEET_NAME);
   const lastCol = sheet.getLastColumn();
   const values = sheet
     .getRange(Number(rowId), 2, 1, lastCol - 1)
@@ -48,6 +45,7 @@ function doGet(e) {
   const formattedDepartureDate = dateFormatter(departureDate);
   const formattedReturnDate = dateFormatter(returnDate);
 
+  const companyName = getConfig("COMPANY_NAME");
   const html = `
     <!DOCTYPE html>
     <html>
@@ -149,7 +147,7 @@ function doGet(e) {
         <div class="wrapper">
           <div class="header">
             <div>
-              <p style="color: #f2d7d5; font-size: 9px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px;">Your Company Ltd.</p>
+              <p style="color: #f2d7d5; font-size: 9px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px;">${companyName}.</p>
               <h1>Travel Requisition Report</h1>
             </div>
             <div class="id-badge">REQ #${rowId}</div>
@@ -198,7 +196,7 @@ function doGet(e) {
 
           <div class="footer">
             <p>Generated on ${new Date().toLocaleDateString("en-GB")} | Travel Requisition</p>
-            <p style="margin-top: 5px; font-weight: 700;">&copy; Your Company Ltd.</p>
+            <p style="margin-top: 5px; font-weight: 700;">&copy; ${companyName}.</p>
           </div>
         </div>
       </body>
@@ -207,7 +205,7 @@ function doGet(e) {
 
   return HtmlService.createHtmlOutput(html)
     .setTitle(`Summary - ${employeeName}`)
-    .setFaviconUrl(faviconUrl)
+    .setFaviconUrl(getConfig("FAVICON_URL"))
     .addMetaTag("viewport", "width=device-width, initial-scale=1")
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }

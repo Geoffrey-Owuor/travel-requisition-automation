@@ -1,2 +1,4 @@
 # dependencies
 /node_modules
+# local copy of real Script Property values
+config.json

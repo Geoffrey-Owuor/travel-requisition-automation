@@ -1,5 +1,6 @@
 function EmailTemplate({ rowId, message, title, role, reviewLink }) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const companyName = getConfig("COMPANY_NAME");
 
   const lastCol = sheet.getLastColumn();
   const values = sheet.getRange(rowId, 2, 1, lastCol - 1).getValues()[0];
@@ -107,7 +108,7 @@ function EmailTemplate({ rowId, message, title, role, reviewLink }) {
 
       <div style="background-color: #f9f9f9; color: #888; padding: 25px; text-align: center; font-size: 11px;">
         <p style="margin: 0 0 5px 0;">This is an automated email.</p>
-        <p style="margin: 0; font-weight: 600;">&copy; ${new Date().getFullYear()} Your Company Ltd. All rights reserved.</p>
+        <p style="margin: 0; font-weight: 600;">&copy; ${new Date().getFullYear()} ${companyName}. All rights reserved.</p>
       </div>
     </div>
   `;

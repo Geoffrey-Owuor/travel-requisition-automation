@@ -1,5 +1,3 @@
-const PDF_WEB_APP_URL = `https://script.google.com/macros/s/YOUR_PDF_DEPLOYMENT_ID/exec?authuser=${0}`;
-
 function EmailTemplate({
   rowId,
   message,
@@ -9,6 +7,8 @@ function EmailTemplate({
   showPdfDownload = false,
 }) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const companyName = getConfig("COMPANY_NAME");
+  const pdfWebAppUrl = getWebAppLink_("PDF_WEB_APP_URL");
 
   const lastCol = sheet.getLastColumn();
   const values = sheet.getRange(rowId, 2, 1, lastCol - 1).getValues()[0];
@@ -59,7 +59,7 @@ function EmailTemplate({
         <div style="background: linear-gradient(135deg, #1c1c1e 0%, #2d2a26 60%, #4a3f35 100%); border-radius: 20px 20px 0 0; padding: 40px 36px 32px; text-align: center; position: relative; overflow: hidden;">
           <div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; border-radius: 50%; background: rgba(196,160,96,0.12);"></div>
           <div style="position: absolute; bottom: -20px; left: -20px; width: 80px; height: 80px; border-radius: 50%; background: rgba(196,160,96,0.08);"></div>
-          <p style="margin: 12px 0 8px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: #c4a060; opacity: 0.9;">Your Company Ltd.</p>
+          <p style="margin: 12px 0 8px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: #c4a060; opacity: 0.9;">${companyName}.</p>
           <h2 style="margin: 0; font-size: 24px; font-weight: 400; letter-spacing: 0.5px; color: #ffffff; font-family: 'Georgia', serif; line-height: 1.3;">${title}</h2>
           <div style="margin-top: 18px; width: 40px; height: 2px; background: linear-gradient(90deg, #c4a060, #e8c97a); margin-left: auto; margin-right: auto; border-radius: 2px;"></div>
         </div>
@@ -128,7 +128,7 @@ function EmailTemplate({
 
             <!-- Download PDF (everyone) -->
             <div style="${pdfButtonStyle}">
-              <a href="${PDF_WEB_APP_URL}&rowId=${rowId}" style="display: inline-block; background: linear-gradient(135deg, #4a3f35 0%, #3a3530 100%); color: #e8c97a; padding: 14px 40px; text-decoration: none; border-radius: 50px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; box-shadow: 0 6px 20px rgba(28,28,30,0.2);">&#11123; &nbsp;Download PDF</a>
+              <a href="${pdfWebAppUrl}&rowId=${rowId}" style="display: inline-block; background: linear-gradient(135deg, #4a3f35 0%, #3a3530 100%); color: #e8c97a; padding: 14px 40px; text-decoration: none; border-radius: 50px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; box-shadow: 0 6px 20px rgba(28,28,30,0.2);">&#11123; &nbsp;Download PDF</a>
             </div>
 
            </div>
@@ -138,7 +138,7 @@ function EmailTemplate({
         <!-- Footer -->
         <div style="background: linear-gradient(135deg, #2d2a26 0%, #1c1c1e 100%); border-radius: 0 0 20px 20px; padding: 24px 36px; text-align: center;">
           <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; color: #888077; margin: 0 0 4px; letter-spacing: 0.5px;">This is an automated notification. Please do not reply to this email.</p>
-          <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; color: #c4a060; margin: 0; font-weight: 600; letter-spacing: 1px;">&copy; ${new Date().getFullYear()} Your Company Ltd. All rights reserved.</p>
+          <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; color: #c4a060; margin: 0; font-weight: 600; letter-spacing: 1px;">&copy; ${new Date().getFullYear()} ${companyName}. All rights reserved.</p>
         </div>
 
       </div>

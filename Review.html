@@ -8,7 +8,7 @@
     />
     <style>
       :root {
-        --primary: #003366; /* Brand Professional Navy */
+        --primary: #003366; /* Brand navy */
         --secondary: #6c757d;
         --success: #28a745;
         --danger: #dc3545;
@@ -220,7 +220,7 @@
 
     <div class="container">
       <div class="header">
-        <h1>Your Company Ltd</h1>
+        <h1><?= companyName ?></h1>
       </div>
 
       <div class="card">
@@ -288,7 +288,7 @@
 
       <div class="footer">
         <p>
-          &copy; <?= new Date().getFullYear() ?> Your Company Ltd. All
+          &copy; <?= new Date().getFullYear() ?> <?= companyName ?>. All
           rights reserved.
         </p>
         <p>Travel Requisition System</p>

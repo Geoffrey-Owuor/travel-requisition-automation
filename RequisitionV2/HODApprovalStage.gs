@@ -76,9 +76,9 @@ function hodApprovalStage({
     } else {
       // The requisition requires the next approval - HR Approval
       // Send emails to the required hr approvers
-      HR_APPROVERS.forEach((hrApprover) => {
+      getApprovers_("HR").forEach((hrApprover) => {
         //  Generate a reviewLink
-        const reviewLink = `${webAppUrl}&rowId=${rowId}&token=${hrApprover.uuid}&stage=HR`;
+        const reviewLink = `${getWebAppLink_("WEB_APP_URL")}&rowId=${rowId}&token=${hrApprover.uuid}&stage=HR`;
 
         // Generate an HR email html
         const hrHtmlBody = EmailTemplate({

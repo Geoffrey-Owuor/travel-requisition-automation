@@ -1,14 +1,11 @@
-// Our global constants
-const SPREADSHEET_ID = "YOUR_GOOGLE_SHEET_ID";
+// Our global constants (SPREADSHEET_ID, FAVICON_URL and COMPANY_NAME are Script Properties)
 const SHEET_NAME = "Form Responses 1";
-const faviconUrl =
-  "https://lh3.googleusercontent.com/u/0/d/YOUR_FAVICON_FILE_ID#.png";
 
 function doGet(e) {
   const rowId = e.parameter.rowId;
 
   const sheet =
-    SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
+    SpreadsheetApp.openById(getConfig("SPREADSHEET_ID")).getSheetByName(SHEET_NAME);
   const lastCol = sheet.getLastColumn();
   const values = sheet
     .getRange(Number(rowId), 2, 1, lastCol - 1)
@@ -47,6 +44,7 @@ function doGet(e) {
   const formattedDepartureDate = dateFormatter(departureDate);
   const formattedReturnDate = dateFormatter(returnDate);
 
+  const companyName = getConfig("COMPANY_NAME");
   const html = `
     <!DOCTYPE html>
     <html>
@@ -133,7 +131,7 @@ function doGet(e) {
           <div class="header">
             <div class="bubble1"></div>
             <div class="bubble2"></div>
-            <p class="brand">Your Company Ltd.</p>
+            <p class="brand">${companyName}.</p>
             <h1>Travel Requisition Summary</h1>
             <div class="divider"></div>
           </div>
@@ -192,7 +190,7 @@ function doGet(e) {
           <!-- Footer -->
           <div class="footer">
             <p>This is an automated document.</p>
-            <p class="copy">&copy; ${new Date().getFullYear()} Your Company Ltd. All rights reserved.</p>
+            <p class="copy">&copy; ${new Date().getFullYear()} ${companyName}. All rights reserved.</p>
           </div>
 
         </div>
@@ -202,7 +200,7 @@ function doGet(e) {
 
   return HtmlService.createHtmlOutput(html)
     .setTitle(`Travel Requisition - ${employeeName}`)
-    .setFaviconUrl(faviconUrl)
+    .setFaviconUrl(getConfig("FAVICON_URL"))
     .addMetaTag("viewport", "width=device-width, initial-scale=1")
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }

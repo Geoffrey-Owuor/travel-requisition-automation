@@ -6,21 +6,20 @@ function doGet(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
 
   // Our favicon url
-  const faviconUrl =
-    "https://lh3.googleusercontent.com/u/0/d/YOUR_FAVICON_FILE_ID#.png";
+  const faviconUrl = getConfig("FAVICON_URL");
 
   //Determine which array we need to check based on the stage
   let arrayMapper;
 
   switch (stage) {
     case "HOD":
-      arrayMapper = HOD_APPROVERS;
+      arrayMapper = getApprovers_("HOD");
       break;
     case "HR":
-      arrayMapper = HR_APPROVERS;
+      arrayMapper = getApprovers_("HR");
       break;
     case "Director":
-      arrayMapper = DIRECTOR_APPROVERS;
+      arrayMapper = getApprovers_("Director");
       break;
     default:
       arrayMapper = undefined;
@@ -78,6 +77,8 @@ function doGet(e) {
   const html = HtmlService.createTemplateFromFile("Review");
 
   // Pass variables (submitted values) to the HTML
+  html.companyName = getConfig("COMPANY_NAME");
+  html.logoUrl = getConfig("LOGO_URL");
   html.rowId = rowId;
   html.stage = stage;
   html.name = approverObject.name;
@@ -102,7 +103,7 @@ function doGet(e) {
 
   return html
     .evaluate()
-    .setTitle(`Review Portal | YCL - ${stage} Approval Stage`)
+    .setTitle(`Review Portal | ${getConfig("COMPANY_SHORT_NAME")} - ${stage} Approval Stage`)
     .setFaviconUrl(faviconUrl)
     .addMetaTag("viewport", "width=device-width, initial-scale=1")
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);

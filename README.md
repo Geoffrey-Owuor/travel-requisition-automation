@@ -37,7 +37,8 @@ The Travel Requisition Automation system streamlines the approval process by eli
 
 ## Project Structure
 
-- **`Code.gs`**: Contains the core logic, including the `onFormSubmit` trigger and configuration maps (`DIRECTOR_MAP`, `HR_MAP`).
+- **`Code.gs`**: Contains the core logic, including the `onFormSubmit` trigger.
+- **`Config.gs`**: `getConfig(key)` reads settings from Script Properties and throws a clear error if one is missing.
 - **`WebApp.gs`**: Handles the Web App GET requests (`doGet`) and processes reviews (`processReview`).
 - **`EmailTemplate.gs`**: Generates HTML email bodies for notifications, including dynamic data from the sheet.
 - **`Review.html`**: The HTML template for the approval interface.
@@ -59,7 +60,7 @@ To set up this project, follow these steps:
     - In the Sheet, go to **Extensions** > **Apps Script**.
 
 4.  **Copy Files**:
-    - Copy the contents of `Code.gs`, `WebApp.gs`, `EmailTemplate.gs`, `Review.html`, and `AlreadyProcessed.html` into the script editor.
+    - Copy the contents of `Config.gs`, `Code.gs`, `WebApp.gs`, `EmailTemplate.gs`, `Review.html`, and `AlreadyProcessed.html` into the script editor.
     - Ensure file names match exactly.
 
 5.  **Deploy as Web App**:
@@ -70,11 +71,10 @@ To set up this project, follow these steps:
     - Click **Deploy**.
     - **Copy the Web App URL**.
 
-6.  **Update Script URL**:
-    - Open `EmailTemplate.gs`.
-    - Replace the `webAppUrl` variable with your new Web App URL from step 5.
-    - Save the file.
-    - _Note: You may need to deploy again (Manage deployments > Edit > New version) to update the code with the correct URL._
+6.  **Set Script Properties**:
+    - Go to **Project Settings** > **Script Properties**.
+    - Add the keys listed for your project in `config.example.json` (e.g. `WEB_APP_URL` = the Web App URL from step 5, without any query string).
+    - No redeploy is needed when a property changes; it is read at run time.
 
 7.  **Set Up Triggers**:
     - In the Apps Script editor, go to **Triggers** (alarm clock icon).
@@ -86,21 +86,15 @@ To set up this project, follow these steps:
 
 ## Configuration
 
-### Approver Mappings
+### Script Properties
 
-In `Code.gs`, update the `DIRECTOR_MAP` and `HR_MAP` objects with the actual names and email addresses of your approvers.
+All environment-specific values (web app URLs, spreadsheet ID, approver names/emails/tokens, company name, logo and favicon URLs) are stored in **Script Properties**, never in code. `config.example.json` lists every key per Apps Script project with placeholder values. Objects and arrays are stored as single-line JSON, for example `DIRECTOR_MAP`:
 
-```javascript
-// Example in Code.gs
-const DIRECTOR_MAP = {
-  "Director Name 1": "director1@example.com",
-  "Director Name 2": "director2@example.com",
-};
-
-const HR_MAP = {
-  "HR Name 1": "hr1@example.com",
-};
+```json
+{"Director Name 1": "director1@example.com", "Director Name 2": "director2@example.com"}
 ```
+
+If a key is missing, the script stops with an error naming the missing property.
 
 Ensure the names in the keys match exactly with the options in your Google Form dropdowns.
 

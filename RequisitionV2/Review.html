@@ -402,8 +402,8 @@
     <div class="container">
       <div class="header">
         <img
-          src="https://lh3.googleusercontent.com/u/0/d/YOUR_LOGO_FILE_ID"
-          alt="Brand Logo"
+          src="<?= logoUrl ?>"
+          alt="<?= companyName ?> Logo"
           class="header-logo"
         />
       </div>
@@ -516,7 +516,7 @@
 
       <div class="footer">
         <p>
-          &copy; <?= new Date().getFullYear() ?> Your Company Ltd. All
+          &copy; <?= new Date().getFullYear() ?> <?= companyName ?>. All
           rights reserved.
         </p>
         <p>Travel Requisition System</p>
